@@ -1,0 +1,21 @@
+Helecopter
+-can move from left to right
+-has a gun with infinite ammo
+-has a health bar
+-has 1 bomb that can destroy a building, a missile pad, or people near the blast
+
+Soldier
+-goes to a missile pad is the pad is in range
+-can shoot at helecopter if they it is in range
+
+building
+-has a certain number of players in it
+-players will come out of it. The rate depends on how alert the base is 
+
+
+Missile pad
+-has a missile that will always hit and destroy the helecopter if it is activated and the helecopter is in range
+-has a health bar
+
+Alarm
+-dependig on how much damage the helecopter has caused, the alert amount will go up
