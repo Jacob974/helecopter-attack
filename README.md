@@ -21,7 +21,7 @@ This is a game where you control a helecopter and your job is to take out an ene
 * Run the Make command in the terminal to compile the project. Generally the command is "make," but it might be differant depending on how you have Make set up
 
 ## Running the program
-*Type "./main.exec" into the terminal to run the program
+* Type "./main.exec" into the terminal to run the program
 
 ## Team
 * Jacob Lavi- lead designer, coder, artist, superviser (I am the only person who worked on this project)
