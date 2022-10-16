@@ -1,4 +1,5 @@
 #include "building.h"
+#include "stdlib.h"
 
 void buildingCreate(GameHandler* gameHandler, int pos, int stories)
 {
@@ -21,11 +22,16 @@ void buildingRemove(GameHandler* gameHandler, int element)
 
 void buildingExitSoldier(GameHandler* gameHandler, int element)
 {
+    if(gameHandler->buildingList[element].playerCount <= 0)
+    {
+        gameHandler->buildingList[element].playerCount--;
 
-}
-Int8 buildingDetectBulletHit(Vec2 bulletPos, Vec2 helecopterPos) //returns true if it has been hit
-{
+        gameHandler->soldierAmount++;
+        gameHandler->soldierList = realloc(gameHandler->soldierList, gameHandler->soldierAmount); //reallocates soldier list to add new soldier
 
+        int soldierPos = gameHandler->buildingList[element].pos + (gameHandler->buildingList[element].size.x / 2);
+        gameHandler->soldierList[gameHandler->soldierAmount-1].pos = soldierPos; //puts the soldier infront of the building
+    }
 }
 
 void RenderBuilding()
