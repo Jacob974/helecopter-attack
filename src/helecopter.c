@@ -23,7 +23,7 @@ void helecopterFireGun(Helecopter* helecopter, Vec2 direction, GameHandler* game
         
         if(detectCollision(tilePos, tileSize, lineOrigin, lineEnd))
         {
-            gameHandlerRemoveSoldier(gameHandler, i);
+            soldierRemove(gameHandler, i);
             i--; //makes it so the next turn of the loop will be the same element since the array has been realocated
         }
     }
@@ -39,7 +39,7 @@ void helecopterFireGun(Helecopter* helecopter, Vec2 direction, GameHandler* game
             gameHandler->buildingList->damage -= 0.1;
             if(gameHandler->buildingList->damage <= 0.0)
             {
-                gameHandlerRemoveBuilding(gameHandler, i);
+                buildingRemove(gameHandler, i);
                 i--; //makes it so the next itteration of the loop will be the same element since the array has been realocated
             }
         }
@@ -55,7 +55,7 @@ void helecopterFireGun(Helecopter* helecopter, Vec2 direction, GameHandler* game
             gameHandler->missilePadList[i].damage -= 0.05;
             if(gameHandler->missilePadList[i].damage <= 0.0)
             {
-                gameHandlerRemoveMissilePad(gameHandler, i);
+                missilePadRemove(gameHandler, i);
                 i--; //makes it so the next itteration of the loop will be the same element since the array has been realocated
             }
         }
@@ -78,7 +78,7 @@ void helecopterDropBomb(Helecopter* helecopter, GameHandler* gameHandler)
                 Vec2 soldierPos = (Vec2){.x = gameHandler->soldierList[i].pos, .y = gameHandler->groundHight - gameHandler->soldierList[i].size.y};
                 if(rectIntersectRect(bombExplodePos, bombExplodeSize, soldierPos, gameHandler->soldierList[i].size))
                 {
-                    gameHandlerRemoveSoldier(gameHandler, i);
+                    soldierRemove(gameHandler, i);
                     i--; //adjusts i since the soldier list was reallocated
                 }
             }
@@ -88,7 +88,7 @@ void helecopterDropBomb(Helecopter* helecopter, GameHandler* gameHandler)
                 
                 if(rectIntersectRect(helecopter->bombPos, helecopter->bombsize, buildingPos, gameHandler->buildingList[i].size))
                 {
-                    gameHandlerRemoveBuilding(gameHandler, i);
+                    buildingRemove(gameHandler, i);
                     i--; //adjusts i since the building list was reallocated
                 }
                 else if(rectIntersectRect(bombExplodePos, bombExplodeSize, buildingPos, gameHandler->buildingList[i].size))
@@ -96,7 +96,7 @@ void helecopterDropBomb(Helecopter* helecopter, GameHandler* gameHandler)
                     gameHandler->buildingList[i].damage -= 0.5;
                     if(gameHandler->buildingList[i].damage <= 0.0)
                     {
-                        gameHandlerRemoveBuilding(gameHandler, i);
+                        buildingRemove(gameHandler, i);
                         i--; //adjusts i since the building list was reallocated
                     }
                 } 
@@ -107,7 +107,7 @@ void helecopterDropBomb(Helecopter* helecopter, GameHandler* gameHandler)
                 
                 if(rectIntersectRect(helecopter->bombPos, helecopter->bombsize, missilePadPos, gameHandler->missilePadList[i].size))
                 {
-                    gameHandlerRemoveBuilding(gameHandler, i);
+                    buildingRemove(gameHandler, i);
                     i--; //adjusts i since the building list was reallocated
                 }
                 else if(rectIntersectRect(bombExplodePos, bombExplodeSize, missilePadPos, gameHandler->missilePadList[i].size))
@@ -115,7 +115,7 @@ void helecopterDropBomb(Helecopter* helecopter, GameHandler* gameHandler)
                     gameHandler->missilePadList[i].damage -= 0.5;
                     if(gameHandler->missilePadList[i].damage <= 0.0)
                     {
-                        gameHandlerRemoveMissilePad(gameHandler, i);
+                        missilePadRemove(gameHandler, i);
                         i--; //adjusts i since the building list was reallocated
                     }
                 } 
