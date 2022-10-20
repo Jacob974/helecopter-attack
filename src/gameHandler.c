@@ -21,5 +21,9 @@ void createGameHandler(GameHandler* gameHandler, Helecopter* helecopter, Vec2 he
 
     gameHandler->alertAmount = 0;
 }
-
-
+void gameHandlerUpdate(GameHandler* gameHandler, Vec2 windowSize)
+{
+    //updates the offset
+    gameHandler->offset.x = -gameHandler->helecopter->helecopterPos.x + (windowSize.x / 2) - (gameHandler->helecopter->size.x / 2);
+    gameHandler->offset.y = -gameHandler->helecopter->helecopterPos.y + (windowSize.y / 2) - (gameHandler->helecopter->size.y / 2);
+}
