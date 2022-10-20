@@ -1,4 +1,5 @@
 #include "helecopter.h"
+#include <stdlib.h>
 
 void helecopterMove(Helecopter* helecopter, Vec2 direction)
 {
@@ -8,12 +9,12 @@ void helecopterMove(Helecopter* helecopter, Vec2 direction)
 void helecopterFireGun(Helecopter* helecopter, Vec2 direction, GameHandler* gameHandler)
 {
     //takes it from screen space ant turns it into gamespace
-    Vec2f realdirection;
-    realdirection.x = ((double)(direction.x) * gameHandler->gameScale) + gameHandler->offset.x;
-    realdirection.y = ((double)(direction.y) * gameHandler->gameScale) + gameHandler->offset.y;
+    Vec2f realDirection;
+    realDirection.x = ((double)(direction.x) * gameHandler->gameScale) + gameHandler->offset.x;
+    realDirection.y = ((double)(direction.y) * gameHandler->gameScale) + gameHandler->offset.y;
 
     Vec2f lineOrigin = (Vec2f){.x = (double)(helecopter->helecopterPos.x + (helecopter->size.x / 2)), .y = helecopter->helecopterPos.y + helecopter->size.y};
-    Vec2f lineEnd = (Vec2f){.x = (double)(direction.x), .y = (double)(direction.y)};
+    Vec2f lineEnd = (Vec2f){.x = (double)(realDirection.x), .y = (double)(realDirection.y)};
     
     //detects if it hits a soldier
     for(int i = 0; i < gameHandler->soldierAmount; i++)

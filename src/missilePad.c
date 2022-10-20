@@ -1,4 +1,5 @@
 #include "missilePad.h"
+#include <stdlib.h>
 
 void missilePadCreate(GameHandler* gameHandler, int pos)
 {

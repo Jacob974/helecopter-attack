@@ -1,4 +1,5 @@
 #include "soldier.h"
+#include <stdlib.h>
 
 void soldierCreate(GameHandler* gameHandler, int buildingToExit)
 {
