@@ -125,7 +125,28 @@ void helecopterDropBomb(Helecopter* helecopter, GameHandler* gameHandler)
     }
 }
 
-void render()
+void helecopterRender(SDL_Renderer* renderer, Helecopter* helecopter, GameHandler* gameHandler)
 {
+    SDL_SetRenderDrawColor(renderer, 0, 255, 100, 255);
 
+    SDL_RenderDrawLine(renderer, 
+        gameHandler->offset.x + helecopter->helecopterPos.x, 
+        gameHandler->offset.y + helecopter->helecopterPos.y, 
+        gameHandler->offset.x + helecopter->helecopterPos.x + helecopter->size.x, 
+        gameHandler->offset.y + helecopter->helecopterPos.y);
+    SDL_RenderDrawLine(renderer, 
+        gameHandler->offset.x + helecopter->helecopterPos.x, 
+        gameHandler->offset.y + helecopter->helecopterPos.y, 
+        gameHandler->offset.x + helecopter->helecopterPos.x, 
+        gameHandler->offset.y + helecopter->helecopterPos.y + helecopter->size.y);
+    SDL_RenderDrawLine(renderer, 
+        gameHandler->offset.x + helecopter->helecopterPos.x, 
+        gameHandler->offset.y + helecopter->helecopterPos.y + helecopter->size.y, 
+        gameHandler->offset.x + helecopter->helecopterPos.x + helecopter->size.x, 
+        gameHandler->offset.y + helecopter->helecopterPos.y + helecopter->size.y);
+    SDL_RenderDrawLine(renderer, 
+        gameHandler->offset.x + helecopter->helecopterPos.x + helecopter->size.x, 
+        gameHandler->offset.y + helecopter->helecopterPos.y, 
+        gameHandler->offset.x + helecopter->helecopterPos.x + helecopter->size.x, 
+        gameHandler->offset.y + helecopter->helecopterPos.y + helecopter->size.y);
 }
