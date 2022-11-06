@@ -30,13 +30,13 @@ Int8 detectCollision(Vec2f tilePos, Vec2f tileSize, Vec2f lineOrigin, Vec2f line
 
     return 0;
 }
-Int8 rectIntersectRect(Vec2 tile1Pos, Vec2 tile1Size, Vec2 tile2Pos, Vec2 tile2Size)
+Int8 rectIntersectRect(Vec2f tile1Pos, Vec2 tile1Size, Vec2f tile2Pos, Vec2 tile2Size)
 {
     if(
-        ((tile1Pos.x + tile1Size.x) < tile2Pos.x)||
-        ((tile2Pos.x + tile2Size.x) < tile1Pos.x)||
-        ((tile1Pos.y + tile1Size.y) < tile2Pos.y)||
-        ((tile2Pos.y + tile2Size.y) < tile1Pos.y)
+        ((tile1Pos.x + (double)(tile1Size.x)) < tile2Pos.x)||
+        ((tile2Pos.x + (double)(tile2Size.x)) < tile1Pos.x)||
+        ((tile1Pos.y + (double)(tile1Size.y)) < tile2Pos.y)||
+        ((tile2Pos.y + (double)(tile2Size.y)) < tile1Pos.y)
     ) return 0;
     return 1;
 }

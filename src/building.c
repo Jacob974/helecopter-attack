@@ -1,7 +1,7 @@
 #include "building.h"
 #include "stdlib.h"
 
-void buildingCreate(GameHandler *gameHandler, int pos, int stories)
+void buildingCreate(GameHandler *gameHandler, double pos, int stories)
 {
     gameHandler->buildingList = realloc(gameHandler->buildingList, (gameHandler->buildingAmount + 1) * sizeof(Building));
 
@@ -43,24 +43,24 @@ void buildingRender(SDL_Renderer *renderer, GameHandler *gameHandler)
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
         SDL_RenderDrawLine(renderer, 
-            gameHandler->buildingList[i].pos + gameHandler->offset.x, 
-            gameHandler->groundHight + gameHandler->offset.y, 
-            gameHandler->buildingList[i].pos + gameHandler->offset.x, 
-            gameHandler->groundHight + gameHandler->offset.y - gameHandler->buildingList[i].size.y);
+            (int)(gameHandler->buildingList[i].pos) + gameHandler->offset.x, 
+                  gameHandler->groundHight + gameHandler->offset.y, 
+            (int)(gameHandler->buildingList[i].pos) + gameHandler->offset.x, 
+                  gameHandler->groundHight + gameHandler->offset.y - gameHandler->buildingList[i].size.y);
         SDL_RenderDrawLine(renderer, 
-            gameHandler->buildingList[i].pos + gameHandler->offset.x, 
-            gameHandler->groundHight + gameHandler->offset.y, 
-            gameHandler->buildingList[i].pos + gameHandler->offset.x + gameHandler->buildingList[i].size.x, 
-            gameHandler->groundHight + gameHandler->offset.y);
+            (int)(gameHandler->buildingList[i].pos) + gameHandler->offset.x, 
+                  gameHandler->groundHight + gameHandler->offset.y, 
+            (int)(gameHandler->buildingList[i].pos) + gameHandler->offset.x + gameHandler->buildingList[i].size.x, 
+                  gameHandler->groundHight + gameHandler->offset.y);
         SDL_RenderDrawLine(renderer, 
-            gameHandler->buildingList[i].pos + gameHandler->offset.x + gameHandler->buildingList[i].size.x, 
-            gameHandler->groundHight + gameHandler->offset.y, 
-            gameHandler->buildingList[i].pos + gameHandler->offset.x + gameHandler->buildingList[i].size.x, 
-            gameHandler->groundHight + gameHandler->offset.y - gameHandler->buildingList[i].size.y);
+            (int)(gameHandler->buildingList[i].pos) + gameHandler->offset.x + gameHandler->buildingList[i].size.x, 
+                  gameHandler->groundHight + gameHandler->offset.y, 
+            (int)(gameHandler->buildingList[i].pos) + gameHandler->offset.x + gameHandler->buildingList[i].size.x, 
+                  gameHandler->groundHight + gameHandler->offset.y - gameHandler->buildingList[i].size.y);
         SDL_RenderDrawLine(renderer, 
-            gameHandler->buildingList[i].pos + gameHandler->offset.x, 
-            gameHandler->groundHight + gameHandler->offset.y - gameHandler->buildingList[i].size.y, 
-            gameHandler->buildingList[i].pos + gameHandler->offset.x + gameHandler->buildingList[i].size.x, 
-            gameHandler->groundHight + gameHandler->offset.y - gameHandler->buildingList[i].size.y);
+            (int)(gameHandler->buildingList[i].pos) + gameHandler->offset.x, 
+                  gameHandler->groundHight + gameHandler->offset.y - gameHandler->buildingList[i].size.y, 
+            (int)(gameHandler->buildingList[i].pos) + gameHandler->offset.x + gameHandler->buildingList[i].size.x, 
+                  gameHandler->groundHight + gameHandler->offset.y - gameHandler->buildingList[i].size.y);
     }
 }

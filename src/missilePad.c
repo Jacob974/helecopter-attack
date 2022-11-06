@@ -1,13 +1,15 @@
 #include "missilePad.h"
 #include <stdlib.h>
 
-void missilePadCreate(GameHandler* gameHandler, int pos)
+void missilePadCreate(GameHandler* gameHandler, double pos)
 {
     gameHandler->missilePadAmount++;
     gameHandler->missilePadList = realloc(gameHandler->missilePadList, gameHandler->missilePadAmount * sizeof(MissilePad));
 
     gameHandler->missilePadList[gameHandler->missilePadAmount].size.y = 20;
     gameHandler->missilePadList[gameHandler->missilePadAmount].size.x = 55;
+
+    gameHandler->missilePadList[gameHandler->missilePadAmount].pos = pos;
 }
 
 void missilePadRemove(GameHandler* gameHandler, int element)

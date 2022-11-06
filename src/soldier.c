@@ -6,7 +6,7 @@ void soldierCreate(GameHandler* gameHandler, int buildingToExit)
     gameHandler->soldierAmount++;
     gameHandler->soldierList = realloc(gameHandler->soldierList, gameHandler->soldierAmount * sizeof(Soldier));
 
-    gameHandler->soldierList[gameHandler->soldierAmount].pos = gameHandler->buildingList[buildingToExit].pos + gameHandler->buildingList[buildingToExit].size.x;
+    gameHandler->soldierList[gameHandler->soldierAmount].pos = gameHandler->buildingList[buildingToExit].pos + (double)(gameHandler->buildingList[buildingToExit].size.x);
 
     gameHandler->soldierList[gameHandler->soldierAmount].size = (Vec2){.x = 10, .y = 20};
     gameHandler->soldierList[gameHandler->soldierAmount].agrovated = 0;

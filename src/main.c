@@ -16,7 +16,7 @@ int main()
 
     /*game objects here*/
     Helecopter helecopter;
-    helecopter.helecopterPos = (Vec2){.x = 0, .y = 0};
+    helecopter.helecopterPos = (Vec2f){.x = 0.0, .y = 0.0};
     helecopter.size = (Vec2){.x = 64, .y = 32};
 
     GameHandler gameHandler;
@@ -37,19 +37,19 @@ int main()
         }
         if(event.key.keysym.scancode == SDL_SCANCODE_S)
         {
-            helecopter.helecopterPos.y += 5;
+            helecopter.helecopterPos.y += 5.0;
         }
         if(event.key.keysym.scancode == SDL_SCANCODE_W)
         {
-            helecopter.helecopterPos.y -= 5;
+            helecopter.helecopterPos.y -= 5.0;
         }
         if(event.key.keysym.scancode == SDL_SCANCODE_D)
         {
-            helecopter.helecopterPos.x += 5;
+            helecopter.helecopterPos.x += 5.0;
         }
         if(event.key.keysym.scancode == SDL_SCANCODE_A)
         {
-            helecopter.helecopterPos.x -= 5;
+            helecopter.helecopterPos.x -= 5.0;
         }
 
         /*updates*/

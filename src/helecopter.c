@@ -1,7 +1,7 @@
 #include "helecopter.h"
 #include <stdlib.h>
 
-void helecopterMove(Helecopter* helecopter, Vec2 direction)
+void helecopterMove(Helecopter* helecopter, Vec2f direction)
 {
     helecopter->helecopterPos.x += direction.x;
     helecopter->helecopterPos.y += direction.y;
@@ -33,7 +33,7 @@ void helecopterFireGun(Helecopter* helecopter, Vec2 direction, GameHandler* game
     for(int i = 0; i < gameHandler->buildingAmount; i++)
     {
         Vec2f tileSize = (Vec2f){.x = (double)(gameHandler->buildingList[i].size.x), .y = (double)(gameHandler->buildingList[i].size.y)};
-        Vec2f tilePos = (Vec2f){.x = gameHandler->buildingList[i].pos, .y = gameHandler->groundHight - gameHandler->buildingList[i].size.y};
+        Vec2f tilePos = (Vec2f){.x = (int)(gameHandler->buildingList[i].pos), .y = gameHandler->groundHight - gameHandler->buildingList[i].size.y};
         
         if(detectCollision(tilePos, tileSize, lineOrigin, lineEnd))
         {
@@ -49,7 +49,7 @@ void helecopterFireGun(Helecopter* helecopter, Vec2 direction, GameHandler* game
     for(int i = 0; i < gameHandler->missilePadAmount; i++)
     {
         Vec2f tileSize = (Vec2f){.x = (double)(gameHandler->missilePadList[i].size.x), .y = (double)(gameHandler->missilePadList[i].size.y)};
-        Vec2f tilePos = (Vec2f){.x = gameHandler->missilePadList[i].pos, .y = gameHandler->groundHight - gameHandler->missilePadList[i].size.y};
+        Vec2f tilePos = (Vec2f){.x = gameHandler->missilePadList[i].pos, .y = (int)(gameHandler->groundHight) - gameHandler->missilePadList[i].size.y};
         
         if(detectCollision(tilePos, tileSize, lineOrigin, lineEnd))
         {
@@ -66,17 +66,17 @@ void helecopterDropBomb(Helecopter* helecopter, GameHandler* gameHandler)
 {
     if(helecopter->droppedBomb)
     {
-        helecopter->bombPos.y += 5;
-        if(helecopter->bombPos.y + helecopter->bombsize.y >= gameHandler->groundHight)
+        helecopter->bombPos.y += 5.0;
+        if((int)(helecopter->bombPos.y) + helecopter->bombsize.y >= gameHandler->groundHight)
         {
             //bomb has exploded
             helecopter->bombPos.y = gameHandler->groundHight - helecopter->bombsize.y; //puts the bomb on the ground
-            Vec2 bombExplodePos = (Vec2){.x = helecopter->bombPos.x - 20, .y = gameHandler->groundHight - 100};
+            Vec2f bombExplodePos = (Vec2f){.x = helecopter->bombPos.x - 20.0, .y = (double)(gameHandler->groundHight - 100)};
             Vec2 bombExplodeSize = (Vec2){.x = helecopter->bombsize.x + 40, .y = 150};
 
             for(int i = 0; i < gameHandler->soldierAmount; i++)
             {
-                Vec2 soldierPos = (Vec2){.x = gameHandler->soldierList[i].pos, .y = gameHandler->groundHight - gameHandler->soldierList[i].size.y};
+                Vec2f soldierPos = (Vec2f){.x = gameHandler->soldierList[i].pos, .y = (double)(gameHandler->groundHight - gameHandler->soldierList[i].size.y)};
                 if(rectIntersectRect(bombExplodePos, bombExplodeSize, soldierPos, gameHandler->soldierList[i].size))
                 {
                     soldierRemove(gameHandler, i);
@@ -85,7 +85,7 @@ void helecopterDropBomb(Helecopter* helecopter, GameHandler* gameHandler)
             }
             for(int i = 0; i < gameHandler->buildingAmount; i++)
             {
-                Vec2 buildingPos = (Vec2){.x = gameHandler->buildingList[i].pos, .y = gameHandler->groundHight - gameHandler->buildingList[i].size.y};
+                Vec2f buildingPos = (Vec2f){.x = gameHandler->buildingList[i].pos, .y = (double)(gameHandler->groundHight - gameHandler->buildingList[i].size.y)};
                 
                 if(rectIntersectRect(helecopter->bombPos, helecopter->bombsize, buildingPos, gameHandler->buildingList[i].size))
                 {
@@ -104,7 +104,7 @@ void helecopterDropBomb(Helecopter* helecopter, GameHandler* gameHandler)
             }
             for(int i = 0; i < gameHandler->missilePadAmount; i++)
             {
-                Vec2 missilePadPos = (Vec2){.x = gameHandler->missilePadList[i].pos, .y = gameHandler->groundHight - gameHandler->missilePadList[i].size.y};
+                Vec2f missilePadPos = (Vec2f){.x = gameHandler->missilePadList[i].pos, .y = (double)(gameHandler->groundHight - gameHandler->missilePadList[i].size.y)};
                 
                 if(rectIntersectRect(helecopter->bombPos, helecopter->bombsize, missilePadPos, gameHandler->missilePadList[i].size))
                 {
@@ -130,23 +130,23 @@ void helecopterRender(SDL_Renderer* renderer, Helecopter* helecopter, GameHandle
     SDL_SetRenderDrawColor(renderer, 0, 255, 100, 255);
 
     SDL_RenderDrawLine(renderer, 
-        gameHandler->offset.x + helecopter->helecopterPos.x, 
-        gameHandler->offset.y + helecopter->helecopterPos.y, 
-        gameHandler->offset.x + helecopter->helecopterPos.x + helecopter->size.x, 
-        gameHandler->offset.y + helecopter->helecopterPos.y);
+        gameHandler->offset.x + (int)(helecopter->helecopterPos.x), 
+        gameHandler->offset.y + (int)(helecopter->helecopterPos.y), 
+        gameHandler->offset.x + (int)(helecopter->helecopterPos.x) + helecopter->size.x, 
+        gameHandler->offset.y + (int)(helecopter->helecopterPos.y));
     SDL_RenderDrawLine(renderer, 
-        gameHandler->offset.x + helecopter->helecopterPos.x, 
-        gameHandler->offset.y + helecopter->helecopterPos.y, 
-        gameHandler->offset.x + helecopter->helecopterPos.x, 
-        gameHandler->offset.y + helecopter->helecopterPos.y + helecopter->size.y);
+        gameHandler->offset.x + (int)(helecopter->helecopterPos.x), 
+        gameHandler->offset.y + (int)(helecopter->helecopterPos.y), 
+        gameHandler->offset.x + (int)(helecopter->helecopterPos.x), 
+        gameHandler->offset.y + (int)(helecopter->helecopterPos.y) + helecopter->size.y);
     SDL_RenderDrawLine(renderer, 
-        gameHandler->offset.x + helecopter->helecopterPos.x, 
-        gameHandler->offset.y + helecopter->helecopterPos.y + helecopter->size.y, 
-        gameHandler->offset.x + helecopter->helecopterPos.x + helecopter->size.x, 
-        gameHandler->offset.y + helecopter->helecopterPos.y + helecopter->size.y);
+        gameHandler->offset.x + (int)(helecopter->helecopterPos.x), 
+        gameHandler->offset.y + (int)(helecopter->helecopterPos.y) + helecopter->size.y, 
+        gameHandler->offset.x + (int)(helecopter->helecopterPos.x) + helecopter->size.x, 
+        gameHandler->offset.y + (int)(helecopter->helecopterPos.y) + helecopter->size.y);
     SDL_RenderDrawLine(renderer, 
-        gameHandler->offset.x + helecopter->helecopterPos.x + helecopter->size.x, 
-        gameHandler->offset.y + helecopter->helecopterPos.y, 
-        gameHandler->offset.x + helecopter->helecopterPos.x + helecopter->size.x, 
-        gameHandler->offset.y + helecopter->helecopterPos.y + helecopter->size.y);
+        gameHandler->offset.x + (int)(helecopter->helecopterPos.x) + helecopter->size.x, 
+        gameHandler->offset.y + (int)(helecopter->helecopterPos.y), 
+        gameHandler->offset.x + (int)(helecopter->helecopterPos.x) + helecopter->size.x, 
+        gameHandler->offset.y + (int)(helecopter->helecopterPos.y) + helecopter->size.y);
 }

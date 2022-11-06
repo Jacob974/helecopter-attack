@@ -20,20 +20,20 @@ typedef struct Vec2f
 typedef struct Soldier
 {
     Vec2 size;
-    int pos;
+    double pos;
     Int8 agrovated;
 } Soldier;
 
 typedef struct Helecopter
 {
     Vec2 size;
-    Vec2 helecopterPos;
+    Vec2f helecopterPos;
 
-    Vec2 bulletPos;
+    Vec2f bulletPos;
 
     Int8 containsBomb;
     Int8 droppedBomb;
-    Vec2 bombPos;
+    Vec2f bombPos;
     Vec2 bombsize;
 
     double damage;
@@ -42,7 +42,7 @@ typedef struct Helecopter
 
 typedef struct MissilePad
 {
-    int pos;
+    double pos;
     Vec2 size;
     Int8 missileFired;
 
@@ -51,7 +51,7 @@ typedef struct MissilePad
 
 typedef struct Building
 {
-    int pos;
+    double pos;
     Vec2 size;
 
     int playerCount;
