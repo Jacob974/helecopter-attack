@@ -25,29 +25,41 @@ int main()
     buildingCreate(&gameHandler, 100, 3);
     buildingCreate(&gameHandler, 250, 7);
 
+    /*key press variables*/
+    const Uint8* keyState;
+
+    /*time variables*/
+    unsigned long long beginningFrameTime;
+    unsigned long long endFrameTime;
+
+    int fps = 60;
+    unsigned long long realFps = 1000 / fps;
+
     /*game loop*/
     while (gameRunning)
     {
+        beginningFrameTime = SDL_GetTicks64();
         SDL_PollEvent(&event);
+        keyState = SDL_GetKeyboardState(NULL);
 
         if(event.type == SDL_QUIT || event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
         {
             gameRunning = 0;
             break;
         }
-        if(event.key.keysym.scancode == SDL_SCANCODE_S)
+        if(keyState[SDL_SCANCODE_S])
         {
             helecopter.helecopterPos.y += 5.0;
         }
-        if(event.key.keysym.scancode == SDL_SCANCODE_W)
+        if(keyState[SDL_SCANCODE_W])
         {
             helecopter.helecopterPos.y -= 5.0;
         }
-        if(event.key.keysym.scancode == SDL_SCANCODE_D)
+        if(keyState[SDL_SCANCODE_D])
         {
             helecopter.helecopterPos.x += 5.0;
         }
-        if(event.key.keysym.scancode == SDL_SCANCODE_A)
+        if(keyState[SDL_SCANCODE_A])
         {
             helecopter.helecopterPos.x -= 5.0;
         }
@@ -73,6 +85,12 @@ int main()
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
         SDL_RenderPresent(renderer);
+
+        endFrameTime = SDL_GetTicks64();
+        if(realFps > (endFrameTime - beginningFrameTime))
+        {
+            SDL_Delay(realFps - (endFrameTime - beginningFrameTime));
+        }
     }
     /*destroys SDL objects*/
     SDL_DestroyWindow(window);
