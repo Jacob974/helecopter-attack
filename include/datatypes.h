@@ -34,7 +34,7 @@ typedef struct Helecopter
     Int8 containsBomb;
     Int8 droppedBomb;
     Vec2f bombPos;
-    Vec2 bombsize;
+    Vec2 bombSize;
 
     double damage;
     

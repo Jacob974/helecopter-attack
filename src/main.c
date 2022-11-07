@@ -19,10 +19,13 @@ int main()
     helecopter.helecopterPos = (Vec2f){.x = 0.0, .y = 0.0};
     helecopter.size = (Vec2){.x = 64, .y = 32};
 
+    helecopter.bombSize = (Vec2){.x = 15, .y = 10};
+    helecopter.containsBomb = 1;
+
     GameHandler gameHandler;
     createGameHandler(&gameHandler, &helecopter, (Vec2){.x = 0, .y = 200}, 500, 1.0);
-    buildingCreate(&gameHandler, 0, 5);
     buildingCreate(&gameHandler, 100, 3);
+    buildingCreate(&gameHandler, 0, 5);
     buildingCreate(&gameHandler, 250, 7);
 
     /*key press variables*/
@@ -63,8 +66,15 @@ int main()
         {
             helecopter.helecopterPos.x -= 5.0;
         }
+        if(keyState[SDL_SCANCODE_SPACE])
+        {
+            helecopter.containsBomb = 0;
+        }
 
         /*updates*/
+
+        helecopterDropBomb(&helecopter, &gameHandler);
+
         SDL_GetWindowSize(window, &windowSize.x, &windowSize.y);
         gameHandlerUpdate(&gameHandler, windowSize);
 
