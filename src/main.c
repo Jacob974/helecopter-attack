@@ -54,6 +54,14 @@ int main()
                 gameRunning = 0;
                 break;
             }
+            if(event.type == SDL_MOUSEBUTTONDOWN)
+            {
+                helecopter.firedGun = 1;
+            }
+            if(event.type == SDL_MOUSEBUTTONUP)
+            {
+                helecopter.firedGun = 0;
+            }
         }
         
         if(keyState[SDL_SCANCODE_S])
@@ -76,15 +84,6 @@ int main()
         {
             helecopter.containsBomb = 0;
         }
-        if(keyState[SDL_SCANCODE_LSHIFT])
-        {
-            helecopterFireGun(&helecopter, mouseCoords, &gameHandler);
-            helecopter.firedGun = 1;
-        }
-        else
-        {
-            helecopter.firedGun = 0;
-        }
 
         /*updates*/
 
@@ -93,9 +92,13 @@ int main()
         SDL_GetWindowSize(window, &windowSize.x, &windowSize.y);
         gameHandlerUpdate(&gameHandler, windowSize);
 
-        SDL_RenderClear(renderer);
-        
+        if(helecopter.firedGun == 1)
+        {
+            helecopterFireGun(&helecopter, mouseCoords, &gameHandler);
+        }
+
         /*render stuff in here*/
+        SDL_RenderClear(renderer);
 
         //renders a helecopter (kinda)
         helecopterRender(renderer, &helecopter, &gameHandler);

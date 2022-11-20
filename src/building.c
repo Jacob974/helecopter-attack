@@ -41,7 +41,10 @@ void buildingRender(SDL_Renderer *renderer, GameHandler *gameHandler)
 {
     for (int i = 0; i < gameHandler->buildingAmount; i++)
     {
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+
+        int drawColor = (int)(gameHandler->buildingList[i].damage * 255.0);
+
+        SDL_SetRenderDrawColor(renderer, 255, drawColor, drawColor, 255);
 
         SDL_RenderDrawLine(renderer, 
             (int)(gameHandler->buildingList[i].pos) + gameHandler->offset.x, 

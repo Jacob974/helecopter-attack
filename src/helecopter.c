@@ -41,7 +41,7 @@ void helecopterFireGun(Helecopter* helecopter, Vec2 direction, GameHandler* game
         
         if(detectCollision(tilePos, tileSize, lineOrigin, lineEnd))
         {
-            gameHandler->buildingList[i].damage -= 1.0;
+            gameHandler->buildingList[i].damage -= 0.01;
             if(gameHandler->buildingList[i].damage < 0.0)
             {
                 buildingRemove(gameHandler, i);
@@ -57,7 +57,7 @@ void helecopterFireGun(Helecopter* helecopter, Vec2 direction, GameHandler* game
         
         if(detectCollision(tilePos, tileSize, lineOrigin, lineEnd))
         {
-            gameHandler->missilePadList[i].damage -= 0.05;
+            gameHandler->missilePadList[i].damage -= 0.01;
             if(gameHandler->missilePadList[i].damage <= 0.0)
             {
                 missilePadRemove(gameHandler, i);
