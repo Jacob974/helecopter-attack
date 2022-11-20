@@ -15,7 +15,7 @@ void buildingCreate(GameHandler *gameHandler, double pos, int stories)
 void buildingRemove(GameHandler *gameHandler, int element)
 {
     gameHandler->buildingAmount--;
-    for (int i = element; i < gameHandler->buildingAmount; i++) // moves the elements in the array over to the left 1
+    for(int i = element; i < gameHandler->buildingAmount; i++) // moves the elements in the array over to the left 1
     {
         gameHandler->buildingList[i] = gameHandler->buildingList[i + 1];
     }

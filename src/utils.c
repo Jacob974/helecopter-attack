@@ -32,9 +32,9 @@ Int8 detectCollision(Vec2f tilePos, Vec2f tileSize, Vec2f lineOrigin, Vec2f line
     double nearYRatio = (tileNearSide.y - lineOrigin.y) / (lineEnd.y - lineOrigin.y);
     double farYRatio = (tileFarSide.y - lineOrigin.y) / (lineEnd.y - lineOrigin.y);
 
-    if((nearXRatio > nearYRatio)&&(nearXRatio < farYRatio)&&(nearXRatio < 1.0)&&(nearXRatio >= 0))
+    if((nearXRatio >= nearYRatio)&&(nearXRatio < farYRatio)&&(nearXRatio < 1.0)&&(nearXRatio >= 0.0))
         return 1;
-    if((nearYRatio < farXRatio)&&(nearYRatio < farXRatio)&&(nearYRatio < 1.0)&&(nearYRatio >= 0))
+    if((nearYRatio >= nearXRatio)&&(nearYRatio < farXRatio)&&(nearYRatio < 1.0)&&(nearYRatio >= 0.0))
         return 1;
     return 0;
 }
