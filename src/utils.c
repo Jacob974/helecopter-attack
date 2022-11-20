@@ -2,32 +2,40 @@
 
 Int8 detectCollision(Vec2f tilePos, Vec2f tileSize, Vec2f lineOrigin, Vec2f lineEnd)
 {
-
-    double nearXSide = tilePos.x;
-    double nearYSide = tilePos.y;
-    double farXSide = tilePos.x;
-    double farYSide = tilePos.y;
+    Vec2f tileNearSide;
+    Vec2f tileFarSide;
 
     //creates nessesary variables for the ratios in the next step
-    if(lineOrigin.x - lineEnd.x < 0)
-        farXSide += tileSize.x;
+    if(lineEnd.x > lineOrigin.x)
+    {
+        tileNearSide.x = tilePos.x;
+        tileFarSide.x = tilePos.x + tileSize.x;
+    }
     else
-        nearXSide += tileSize.x;
-    if(lineOrigin.y - lineEnd.y < 0)
-        farYSide += tileSize.y;
+    {
+        tileNearSide.x = tilePos.x + tileSize.x;
+        tileFarSide.x = tilePos.x;
+    }
+    if(lineEnd.y > lineOrigin.y)
+    {
+        tileNearSide.y = tilePos.y;
+        tileFarSide.y = tilePos.y + tileSize.y;
+    }
     else
-        nearYSide += tileSize.y;
+    {
+        tileNearSide.y = tilePos.y + tileSize.y;
+        tileFarSide.y = tilePos.y;
+    }
 
-    //creates ratios that will be compared to each other in the next step
-    double nearXRatio = (nearXSide - lineOrigin.x) / (lineOrigin.x - lineEnd.x);
-    double nearYRatio = (nearYSide - lineOrigin.y) / (lineOrigin.y - lineEnd.y);
-    double farXRatio = (farXSide - lineOrigin.x) / (lineOrigin.x - lineEnd.x);
-    double farYRatio = (farYSide - lineOrigin.y) / (lineOrigin.y - lineEnd.y);
+    double nearXRatio = (tileNearSide.x - lineOrigin.x) / (lineEnd.x - lineOrigin.x);
+    double farXRatio = (tileFarSide.x - lineOrigin.x) / (lineEnd.x - lineOrigin.x);
+    double nearYRatio = (tileNearSide.y - lineOrigin.y) / (lineEnd.y - lineOrigin.y);
+    double farYRatio = (tileFarSide.y - lineOrigin.y) / (lineEnd.y - lineOrigin.y);
 
-    //compares ratios
-    if((nearXRatio >= nearYRatio) && (nearXRatio < farYRatio) && (nearXRatio >= 0)) return 1;
-    if((nearYRatio >= nearXRatio) && (nearYRatio < farXRatio) && (nearYRatio >= 0)) return 1;
-
+    if((nearXRatio > nearYRatio)&&(nearXRatio < farYRatio)&&(nearXRatio < 1.0)&&(nearXRatio >= 0))
+        return 1;
+    if((nearYRatio < farXRatio)&&(nearYRatio < farXRatio)&&(nearYRatio < 1.0)&&(nearYRatio >= 0))
+        return 1;
     return 0;
 }
 Int8 rectIntersectRect(Vec2f tile1Pos, Vec2 tile1Size, Vec2f tile2Pos, Vec2 tile2Size)

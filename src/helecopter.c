@@ -10,12 +10,16 @@ void helecopterFireGun(Helecopter* helecopter, Vec2 direction, GameHandler* game
 {
     //takes it from screen space ant turns it into gamespace
     Vec2f realDirection;
-    realDirection.x = ((double)(direction.x) * gameHandler->gameScale) + gameHandler->offset.x;
-    realDirection.y = ((double)(direction.y) * gameHandler->gameScale) + gameHandler->offset.y;
+    realDirection.x = ((double)(direction.x) * gameHandler->gameScale) - gameHandler->offset.x;
+    realDirection.y = ((double)(direction.y) * gameHandler->gameScale) - gameHandler->offset.y;
 
-    Vec2f lineOrigin = (Vec2f){.x = (double)(helecopter->helecopterPos.x + (helecopter->size.x / 2)), .y = helecopter->helecopterPos.y + helecopter->size.y};
-    Vec2f lineEnd = (Vec2f){.x = (double)(realDirection.x), .y = (double)(realDirection.y)};
+    Vec2f lineOrigin = (Vec2f){.x = helecopter->helecopterPos.x, .y = helecopter->helecopterPos.y};
+    Vec2f lineEnd = (Vec2f){.x = realDirection.x, .y = realDirection.y};
     
+    //gives info to the helecopter
+    helecopter->bulletPos.x = realDirection.x;
+    helecopter->bulletPos.y = realDirection.y;
+
     //detects if it hits a soldier
     for(int i = 0; i < gameHandler->soldierAmount; i++)
     {
@@ -33,12 +37,12 @@ void helecopterFireGun(Helecopter* helecopter, Vec2 direction, GameHandler* game
     for(int i = 0; i < gameHandler->buildingAmount; i++)
     {
         Vec2f tileSize = (Vec2f){.x = (double)(gameHandler->buildingList[i].size.x), .y = (double)(gameHandler->buildingList[i].size.y)};
-        Vec2f tilePos = (Vec2f){.x = (int)(gameHandler->buildingList[i].pos), .y = gameHandler->groundHight - gameHandler->buildingList[i].size.y};
+        Vec2f tilePos = (Vec2f){.x = gameHandler->buildingList[i].pos, .y = gameHandler->groundHight - gameHandler->buildingList[i].size.y};
         
         if(detectCollision(tilePos, tileSize, lineOrigin, lineEnd))
         {
-            gameHandler->buildingList->damage -= 0.1;
-            if(gameHandler->buildingList->damage <= 0.0)
+            gameHandler->buildingList[i].damage -= 1.0;
+            if(gameHandler->buildingList[i].damage < 0.0)
             {
                 buildingRemove(gameHandler, i);
                 i--; //makes it so the next itteration of the loop will be the same element since the array has been realocated
@@ -182,5 +186,16 @@ void helecopterRender(SDL_Renderer* renderer, Helecopter* helecopter, GameHandle
             gameHandler->offset.y + (int)(helecopter->bombPos.y), 
             gameHandler->offset.x + (int)(helecopter->bombPos.x) + helecopter->bombSize.x, 
             gameHandler->offset.y + (int)(helecopter->bombPos.y) + helecopter->bombSize.y);
+    }
+    //renders the bullet
+    if(helecopter->firedGun)
+    {
+        SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
+
+        SDL_RenderDrawLine(renderer, 
+            gameHandler->offset.x + helecopter->helecopterPos.x, 
+            gameHandler->offset.y + helecopter->helecopterPos.y, 
+            helecopter->bulletPos.x + gameHandler->offset.x, 
+            helecopter->bulletPos.y + gameHandler->offset.y);
     }
 }

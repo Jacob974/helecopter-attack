@@ -9,6 +9,7 @@ void buildingCreate(GameHandler *gameHandler, double pos, int stories)
     gameHandler->buildingList[gameHandler->buildingAmount].size.x = 75;
 
     gameHandler->buildingList[gameHandler->buildingAmount].pos = pos;
+    gameHandler->buildingList[gameHandler->buildingAmount].damage = 1.0;
     gameHandler->buildingAmount++;
 }
 void buildingRemove(GameHandler *gameHandler, int element)

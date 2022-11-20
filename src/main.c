@@ -24,12 +24,14 @@ int main()
 
     GameHandler gameHandler;
     createGameHandler(&gameHandler, &helecopter, (Vec2){.x = 0, .y = 200}, 500, 1.0);
-    buildingCreate(&gameHandler, 100, 3);
     buildingCreate(&gameHandler, 0, 5);
+    buildingCreate(&gameHandler, 100, 3);
     buildingCreate(&gameHandler, 250, 7);
+    buildingCreate(&gameHandler, 450, 1);
 
     /*key press variables*/
     const Uint8* keyState;
+    Vec2 mouseCoords;
 
     /*time variables*/
     unsigned long long beginningFrameTime;
@@ -42,14 +44,18 @@ int main()
     while (gameRunning)
     {
         beginningFrameTime = SDL_GetTicks64();
-        SDL_PollEvent(&event);
         keyState = SDL_GetKeyboardState(NULL);
+        SDL_GetMouseState(&mouseCoords.x, &mouseCoords.y);
 
-        if(event.type == SDL_QUIT || event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
+        while(SDL_PollEvent(&event))
         {
-            gameRunning = 0;
-            break;
+            if(event.type == SDL_QUIT || event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
+            {
+                gameRunning = 0;
+                break;
+            }
         }
+        
         if(keyState[SDL_SCANCODE_S])
         {
             helecopter.helecopterPos.y += 5.0;
@@ -69,6 +75,15 @@ int main()
         if(keyState[SDL_SCANCODE_SPACE])
         {
             helecopter.containsBomb = 0;
+        }
+        if(keyState[SDL_SCANCODE_LSHIFT])
+        {
+            helecopterFireGun(&helecopter, mouseCoords, &gameHandler);
+            helecopter.firedGun = 1;
+        }
+        else
+        {
+            helecopter.firedGun = 0;
         }
 
         /*updates*/
@@ -90,7 +105,7 @@ int main()
 
         //renders the ground
         SDL_SetRenderDrawColor(renderer, 146, 76, 0, 255);
-        SDL_RenderDrawLine(renderer, 0, gameHandler.offset.y + gameHandler.groundHight, 2000, gameHandler.offset.y + gameHandler.groundHight);
+        SDL_RenderDrawLine(renderer, 0, gameHandler.offset.y + gameHandler.groundHight, 20000, gameHandler.offset.y + gameHandler.groundHight);
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 

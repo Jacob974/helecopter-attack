@@ -30,6 +30,7 @@ typedef struct Helecopter
     Vec2f helecopterPos;
 
     Vec2f bulletPos;
+    Int8 firedGun;
 
     Int8 containsBomb;
     Int8 droppedBomb;
