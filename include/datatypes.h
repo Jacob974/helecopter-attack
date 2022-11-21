@@ -28,8 +28,10 @@ typedef struct Helecopter
 {
     Vec2 size;
     Vec2f helecopterPos;
-
     Vec2f velocity;
+
+    Int8 stabalizeMode;
+    Int8 displayMode;
 
     Vec2f bulletPos;
     Int8 firedGun;

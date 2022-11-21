@@ -67,6 +67,29 @@ int main()
                 gameRunning = 0;
                 return 0;
             }
+            if(event.key.keysym.scancode == SDL_SCANCODE_E && event.type == SDL_KEYDOWN)
+            {
+                if(helecopter.stabalizeMode == 1)
+                {
+                    helecopter.stabalizeMode = 0;
+                }
+                else if(helecopter.stabalizeMode == 0)
+                {
+                    helecopter.stabalizeMode = 1;
+                }
+            }
+            if(event.key.keysym.scancode == SDL_SCANCODE_Q && event.type == SDL_KEYDOWN)
+            {
+                if(helecopter.displayMode == 1)
+                {
+                    helecopter.displayMode = 0;
+                }
+                else if(helecopter.displayMode == 0)
+                {
+                    helecopter.displayMode = 1;
+                }
+            }
+
         }
         
         if(keyState[SDL_SCANCODE_S])
@@ -100,9 +123,7 @@ int main()
 
         /*updates*/
 
-        helecopter.helecopterPos.x += helecopter.velocity.x;
-        helecopter.helecopterPos.y += helecopter.velocity.y;
-
+        helecopterMove(&helecopter);
         helecopterDropBomb(&helecopter, &gameHandler);
 
         SDL_GetWindowSize(window, &windowSize.x, &windowSize.y);
@@ -139,8 +160,23 @@ int main()
         }
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-
         SDL_RenderPresent(renderer);
+
+        /*print some stuff*/
+        printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        if(helecopter.displayMode == 1)
+        {
+            printf("coords: %f, %f\n", helecopter.helecopterPos.x, helecopter.helecopterPos.y);
+            printf("velocity: %f, %f\n", helecopter.velocity.x, helecopter.velocity.y);
+            if(helecopter.containsBomb)
+            {
+                printf("contains bomb\n");
+            }
+            else
+            {
+                printf("doesnt contain bomb\n");
+            }
+        }
 
         endFrameTime = SDL_GetTicks64();
         if(realFps > (endFrameTime - beginningFrameTime))

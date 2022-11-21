@@ -9,7 +9,7 @@
 
 #include <SDL2/SDL.h>
 
-void helecopterMove(Helecopter* helecopter, Vec2f direction);
+void helecopterMove(Helecopter* helecopter);
 void helecopterFireGun(Helecopter* helecopter, Vec2 direction, GameHandler* gameHandler);
 void helecopterDropBomb(Helecopter* helecopter, GameHandler* gameHandler);
 

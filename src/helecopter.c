@@ -1,10 +1,40 @@
 #include "helecopter.h"
 #include <stdlib.h>
 
-void helecopterMove(Helecopter* helecopter, Vec2f direction)
+void helecopterMove(Helecopter* helecopter)
 {
-    helecopter->helecopterPos.x += direction.x;
-    helecopter->helecopterPos.y += direction.y;
+    if(helecopter->stabalizeMode == 1)
+    {
+        if(helecopter->velocity.x >= 0.2)
+        {
+            helecopter->velocity.x -= 0.2;
+        }
+        else if(helecopter->velocity.x <= -0.2)
+        {
+            helecopter->velocity.x += 0.2;
+        }
+        else
+        {
+            helecopter->velocity.x = 0.0;
+        }
+
+        if(helecopter->velocity.y >= 0.2)
+        {
+            helecopter->velocity.y -= 0.2;
+        }
+        else if(helecopter->velocity.y <= -0.2)
+        {
+            helecopter->velocity.y += 0.2;
+        }
+        else
+        {
+            helecopter->velocity.y = 0.0;
+        }
+    }
+    
+    helecopter->helecopterPos.x += helecopter->velocity.x;
+    helecopter->helecopterPos.y += helecopter->velocity.y;
+    
 }
 void helecopterFireGun(Helecopter* helecopter, Vec2 direction, GameHandler* gameHandler)
 {
