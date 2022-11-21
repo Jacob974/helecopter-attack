@@ -45,7 +45,10 @@ typedef struct MissilePad
 {
     double pos;
     Vec2 size;
+
     Int8 missileFired;
+    Vec2f missilePos;
+    double missileAngle; //in degrees where 90 degrees is up
 
     double damage;
 } MissilePad;

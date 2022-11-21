@@ -24,10 +24,12 @@ int main()
 
     GameHandler gameHandler;
     createGameHandler(&gameHandler, &helecopter, (Vec2){.x = 0, .y = 200}, 500, 1.0);
-    buildingCreate(&gameHandler, 0, 5);
-    buildingCreate(&gameHandler, 100, 3);
-    buildingCreate(&gameHandler, 250, 7);
-    buildingCreate(&gameHandler, 450, 1);
+    buildingCreate(&gameHandler, 0.0, 5);
+    buildingCreate(&gameHandler, 100.0, 3);
+    buildingCreate(&gameHandler, 250.0, 7);
+    buildingCreate(&gameHandler, 450.0, 1);
+
+    missilePadCreate(&gameHandler, 550.0);
 
     /*key press variables*/
     const Uint8* keyState;
@@ -49,18 +51,21 @@ int main()
 
         while(SDL_PollEvent(&event))
         {
+            if(event.button.button == SDL_BUTTON_LEFT)
+            {
+                if(event.type == SDL_MOUSEBUTTONDOWN)
+                {
+                    helecopter.firedGun = 1;
+                }
+                if(event.type == SDL_MOUSEBUTTONUP)
+                {
+                    helecopter.firedGun = 0;
+                }
+            }
             if(event.type == SDL_QUIT || event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
             {
                 gameRunning = 0;
-                break;
-            }
-            if(event.type == SDL_MOUSEBUTTONDOWN)
-            {
-                helecopter.firedGun = 1;
-            }
-            if(event.type == SDL_MOUSEBUTTONUP)
-            {
-                helecopter.firedGun = 0;
+                return 0;
             }
         }
         
@@ -84,6 +89,14 @@ int main()
         {
             helecopter.containsBomb = 0;
         }
+        if(keyState[SDL_SCANCODE_UP])
+        {
+            gameHandler.gameScale += 0.1 * gameHandler.gameScale;
+        }
+        if(keyState[SDL_SCANCODE_DOWN])
+        {
+            gameHandler.gameScale -= 0.1 * gameHandler.gameScale;
+        }
 
         /*updates*/
 
@@ -106,13 +119,20 @@ int main()
         //renders the buildings
         buildingRender(renderer, &gameHandler);
 
+        //renders missile pad
+        missilePadRender(renderer, &gameHandler);
+
         //renders the ground
         SDL_SetRenderDrawColor(renderer, 146, 76, 0, 255);
-        SDL_RenderDrawLine(renderer, 0, gameHandler.offset.y + gameHandler.groundHight, 20000, gameHandler.offset.y + gameHandler.groundHight);
+        SDL_RenderDrawLine(renderer, 0, gameHandler.offset.y + gameHandler.groundHight  * gameHandler.gameScale, 20000, gameHandler.offset.y + gameHandler.groundHight * gameHandler.gameScale);
 
-        for(int i = 0; i < (20000 / 30); i++)
+        for(int i = 0; i < (20000 / 30 * gameHandler.gameScale); i++)
         {
-            SDL_RenderDrawLine(renderer, i * 30 - (int)(helecopter.helecopterPos.x) % 30, gameHandler.offset.y + gameHandler.groundHight, i * 30 - (int)(helecopter.helecopterPos.x) % 30, gameHandler.offset.y + gameHandler.groundHight - 2);
+            SDL_RenderDrawLine(renderer, 
+                gameHandler.gameScale * i * 30 - (int)(helecopter.helecopterPos.x) % 30 * gameHandler.gameScale, 
+                gameHandler.offset.y + gameHandler.groundHight * gameHandler.gameScale, 
+                gameHandler.gameScale * i * 30 - (int)(helecopter.helecopterPos.x) % 30 * gameHandler.gameScale, 
+                gameHandler.offset.y + gameHandler.groundHight * gameHandler.gameScale - 2 * gameHandler.gameScale);
         }
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);

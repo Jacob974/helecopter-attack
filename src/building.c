@@ -22,7 +22,6 @@ void buildingRemove(GameHandler *gameHandler, int element)
 
     gameHandler->buildingList = realloc(gameHandler->buildingList, gameHandler->buildingAmount * sizeof(Building)); // gets rid of the empty slot at the end
 }
-
 void buildingExitSoldier(GameHandler *gameHandler, int element)
 {
     if (gameHandler->buildingList[element].playerCount <= 0)
@@ -36,7 +35,6 @@ void buildingExitSoldier(GameHandler *gameHandler, int element)
         gameHandler->soldierList[gameHandler->soldierAmount - 1].pos = soldierPos; // puts the soldier infront of the building
     }
 }
-
 void buildingRender(SDL_Renderer *renderer, GameHandler *gameHandler)
 {
     for (int i = 0; i < gameHandler->buildingAmount; i++)
@@ -47,24 +45,24 @@ void buildingRender(SDL_Renderer *renderer, GameHandler *gameHandler)
         SDL_SetRenderDrawColor(renderer, 255, drawColor, drawColor, 255);
 
         SDL_RenderDrawLine(renderer, 
-            (int)(gameHandler->buildingList[i].pos) + gameHandler->offset.x, 
-                  gameHandler->groundHight + gameHandler->offset.y, 
-            (int)(gameHandler->buildingList[i].pos) + gameHandler->offset.x, 
-                  gameHandler->groundHight + gameHandler->offset.y - gameHandler->buildingList[i].size.y);
+            gameHandler->buildingList[i].pos * gameHandler->gameScale + gameHandler->offset.x, 
+            gameHandler->groundHight         * gameHandler->gameScale + gameHandler->offset.y, 
+            gameHandler->buildingList[i].pos * gameHandler->gameScale + gameHandler->offset.x, 
+            gameHandler->groundHight         * gameHandler->gameScale + gameHandler->offset.y - gameHandler->buildingList[i].size.y * gameHandler->gameScale);
         SDL_RenderDrawLine(renderer, 
-            (int)(gameHandler->buildingList[i].pos) + gameHandler->offset.x, 
-                  gameHandler->groundHight + gameHandler->offset.y, 
-            (int)(gameHandler->buildingList[i].pos) + gameHandler->offset.x + gameHandler->buildingList[i].size.x, 
-                  gameHandler->groundHight + gameHandler->offset.y);
+            gameHandler->buildingList[i].pos * gameHandler->gameScale + gameHandler->offset.x, 
+            gameHandler->groundHight         * gameHandler->gameScale + gameHandler->offset.y, 
+            gameHandler->buildingList[i].pos * gameHandler->gameScale + gameHandler->offset.x + gameHandler->buildingList[i].size.x * gameHandler->gameScale, 
+            gameHandler->groundHight         * gameHandler->gameScale + gameHandler->offset.y);
         SDL_RenderDrawLine(renderer, 
-            (int)(gameHandler->buildingList[i].pos) + gameHandler->offset.x + gameHandler->buildingList[i].size.x, 
-                  gameHandler->groundHight + gameHandler->offset.y, 
-            (int)(gameHandler->buildingList[i].pos) + gameHandler->offset.x + gameHandler->buildingList[i].size.x, 
-                  gameHandler->groundHight + gameHandler->offset.y - gameHandler->buildingList[i].size.y);
+            gameHandler->buildingList[i].pos * gameHandler->gameScale + gameHandler->offset.x + gameHandler->buildingList[i].size.x * gameHandler->gameScale, 
+            gameHandler->groundHight         * gameHandler->gameScale + gameHandler->offset.y, 
+            gameHandler->buildingList[i].pos * gameHandler->gameScale + gameHandler->offset.x + gameHandler->buildingList[i].size.x * gameHandler->gameScale, 
+            gameHandler->groundHight         * gameHandler->gameScale + gameHandler->offset.y - gameHandler->buildingList[i].size.y * gameHandler->gameScale);
         SDL_RenderDrawLine(renderer, 
-            (int)(gameHandler->buildingList[i].pos) + gameHandler->offset.x, 
-                  gameHandler->groundHight + gameHandler->offset.y - gameHandler->buildingList[i].size.y, 
-            (int)(gameHandler->buildingList[i].pos) + gameHandler->offset.x + gameHandler->buildingList[i].size.x, 
-                  gameHandler->groundHight + gameHandler->offset.y - gameHandler->buildingList[i].size.y);
+            gameHandler->buildingList[i].pos * gameHandler->gameScale + gameHandler->offset.x, 
+            gameHandler->groundHight         * gameHandler->gameScale + gameHandler->offset.y - gameHandler->buildingList[i].size.y * gameHandler->gameScale, 
+            gameHandler->buildingList[i].pos * gameHandler->gameScale + gameHandler->offset.x + gameHandler->buildingList[i].size.x * gameHandler->gameScale, 
+            gameHandler->groundHight         * gameHandler->gameScale + gameHandler->offset.y - gameHandler->buildingList[i].size.y * gameHandler->gameScale);
     }
 }
