@@ -71,19 +71,19 @@ int main()
         
         if(keyState[SDL_SCANCODE_S])
         {
-            helecopter.helecopterPos.y += 5.0;
+            helecopter.velocity.y += 0.2;
         }
         if(keyState[SDL_SCANCODE_W])
         {
-            helecopter.helecopterPos.y -= 5.0;
+            helecopter.velocity.y -= 0.2;
         }
         if(keyState[SDL_SCANCODE_D])
         {
-            helecopter.helecopterPos.x += 5.0;
+            helecopter.velocity.x += 0.2;
         }
         if(keyState[SDL_SCANCODE_A])
         {
-            helecopter.helecopterPos.x -= 5.0;
+            helecopter.velocity.x -= 0.2;
         }
         if(keyState[SDL_SCANCODE_SPACE])
         {
@@ -99,6 +99,9 @@ int main()
         }
 
         /*updates*/
+
+        helecopter.helecopterPos.x += helecopter.velocity.x;
+        helecopter.helecopterPos.y += helecopter.velocity.y;
 
         helecopterDropBomb(&helecopter, &gameHandler);
 

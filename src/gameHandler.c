@@ -4,6 +4,7 @@
 void createGameHandler(GameHandler* gameHandler, Helecopter* helecopter, Vec2 helecopterScreenCoords, int groundHight, double gameScale)
 {
     gameHandler->helecopter = helecopter;
+    gameHandler->helecopter->velocity = (Vec2f){.x = 0.0, .y = 0.0};
 
     gameHandler->offset.x = helecopterScreenCoords.x - (int)(helecopter->helecopterPos.x);
     gameHandler->offset.y = helecopterScreenCoords.y - (int)(helecopter->helecopterPos.y); 
@@ -24,6 +25,6 @@ void createGameHandler(GameHandler* gameHandler, Helecopter* helecopter, Vec2 he
 void gameHandlerUpdate(GameHandler* gameHandler, Vec2 windowSize)
 {
     //updates the offset
-    gameHandler->offset.x = (int)(-gameHandler->helecopter->helecopterPos.x * gameHandler->gameScale) + (windowSize.x / 2) - (gameHandler->helecopter->size.x * gameHandler->gameScale / 2);
-    gameHandler->offset.y = (int)(-gameHandler->helecopter->helecopterPos.y * gameHandler->gameScale) + (windowSize.y / 2) - (gameHandler->helecopter->size.y * gameHandler->gameScale / 2);
+    gameHandler->offset.x = (int)(-gameHandler->helecopter->helecopterPos.x * gameHandler->gameScale) + (windowSize.x / 2) - (gameHandler->helecopter->size.x * gameHandler->gameScale / 2) + (gameHandler->helecopter->velocity.x * 2);
+    gameHandler->offset.y = (int)(-gameHandler->helecopter->helecopterPos.y * gameHandler->gameScale) + (windowSize.y / 2) - (gameHandler->helecopter->size.y * gameHandler->gameScale / 2) + (gameHandler->helecopter->velocity.y * 2);
 }

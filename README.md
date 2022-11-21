@@ -3,9 +3,10 @@
 This is a game where you control a helecopter and your job is to take out an enemy base. You win if you destroy all the buildings and escape safely. You loose if your helecopter gets destroyed
 
 ## How to play 
-* Use the arrow kets to move the helecopter around
-* Hold down the mouse and point to fire the gun
+* Use the WASD kets to move the helecopter around
+* Hold down the left mouse button and point to fire the gun
 * Use the space bar to drop your bomb
+* Use the arrow keys to scale the game up or down
 * The gun can be used to gradually destroy a building or instantly kill a soldier 
 * The bomb can be used to instantly destroy a building or kill a group of soldiers
 
@@ -24,4 +25,4 @@ This is a game where you control a helecopter and your job is to take out an ene
 * Type "./main.exec" into the terminal to run the program
 
 ## Team
-* Jacob Lavi- lead designer, coder, artist, superviser (I am the only person who worked on this project)
+* Jacob Lavi- lead designer, coder, artist, superviser (I am the only person who worked on this project unless you count the developers of SDL)
