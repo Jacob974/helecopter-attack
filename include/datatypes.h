@@ -17,6 +17,13 @@ typedef struct Vec2f
     double y;
 } Vec2f;
 
+typedef struct Explosion
+{
+    Vec2f pos;
+    double size;
+    int duration; //amount of frames left
+} Explosion;
+
 typedef struct Soldier
 {
     Vec2 size;
@@ -37,7 +44,7 @@ typedef struct Helecopter
     Int8 firedGun;
 
     Int8 containsBomb;
-    Int8 droppedBomb;
+    Int8 bombExists;
     Vec2f bombPos;
     Vec2 bombSize;
 
@@ -69,15 +76,15 @@ typedef struct Building
 typedef struct GameHandler
 {
     Soldier* soldierList;
-    int soldierAmount;
-
     Helecopter* helecopter;
-
     Building* buildingList;
-    int buildingAmount;
-
     MissilePad* missilePadList;
+    Explosion* explosionList;
+
+    int soldierAmount;
+    int buildingAmount;
     int missilePadAmount;
+    int explosionAmount;
 
     Vec2f offset;
 

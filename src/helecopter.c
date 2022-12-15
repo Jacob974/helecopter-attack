@@ -99,15 +99,16 @@ void helecopterDropBomb(Helecopter* helecopter, GameHandler* gameHandler)
 {
     if(!helecopter->containsBomb)
     {
-        helecopter->droppedBomb = 1;
         helecopter->bombPos.y += 5.0;
-        if((int)(helecopter->bombPos.y) + helecopter->bombSize.y >= gameHandler->groundHight)
+        if(((int)(helecopter->bombPos.y) + helecopter->bombSize.y >= gameHandler->groundHight) && (helecopter->bombExists == 1))
         {
             //bomb has exploded
             helecopter->bombPos.y = gameHandler->groundHight - helecopter->bombSize.y; //puts the bomb on the ground
-            Vec2f bombExplodePos = (Vec2f){.x = helecopter->bombPos.x - 20.0, .y = (double)(gameHandler->groundHight - 100)};
+            Vec2f bombExplodePos = (Vec2f){.x = helecopter->bombPos.x, .y = (double)(gameHandler->groundHight)};
             Vec2 bombExplodeSize = (Vec2){.x = helecopter->bombSize.x + 40, .y = 150};
-            helecopter->droppedBomb = 0;
+            helecopter->bombExists = 0;
+
+            addexplosion(gameHandler, bombExplodePos, 3.0);
 
             for(int i = 0; i < gameHandler->soldierAmount; i++)
             {
@@ -191,7 +192,7 @@ void helecopterRender(SDL_Renderer* renderer, Helecopter* helecopter, GameHandle
         gameHandler->offset.y + (int)(helecopter->helecopterPos.y * gameHandler->gameScale) + helecopter->size.y * gameHandler->gameScale);
 
     //renders the bomb
-    if(helecopter->droppedBomb)
+    if(!helecopter->containsBomb && helecopter->bombExists)
     {
         SDL_SetRenderDrawColor(renderer, 255, 200, 0, 255);
 

@@ -21,6 +21,8 @@ int main()
 
     helecopter.bombSize = (Vec2){.x = 15, .y = 10};
     helecopter.containsBomb = 1;
+    helecopter.bombExists = 1;
+    helecopter.containsBomb = 1;
 
     GameHandler gameHandler;
     createGameHandler(&gameHandler, &helecopter, (Vec2){.x = 0, .y = 200}, 500, 1.0);
@@ -65,7 +67,6 @@ int main()
             if(event.type == SDL_QUIT || event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
             {
                 gameRunning = 0;
-                return 0;
             }
             if(event.key.keysym.scancode == SDL_SCANCODE_E && event.type == SDL_KEYDOWN)
             {
@@ -114,11 +115,11 @@ int main()
         }
         if(keyState[SDL_SCANCODE_UP])
         {
-            gameHandler.gameScale += 0.1 * gameHandler.gameScale;
+            gameHandler.gameScale += 0.05 * gameHandler.gameScale;
         }
         if(keyState[SDL_SCANCODE_DOWN])
         {
-            gameHandler.gameScale -= 0.1 * gameHandler.gameScale;
+            gameHandler.gameScale -= 0.05 * gameHandler.gameScale;
         }
 
         /*updates*/
@@ -153,30 +154,32 @@ int main()
         for(int i = 0; i < (20000 / 30 * gameHandler.gameScale); i++)
         {
             SDL_RenderDrawLine(renderer, 
-                gameHandler.gameScale * i * 30 - (int)(helecopter.helecopterPos.x) % 30 * gameHandler.gameScale, 
+                (gameHandler.gameScale * i * 30 - (int)(helecopter.helecopterPos.x) % 30 * gameHandler.gameScale + (helecopter.velocity.x * 2)), 
                 gameHandler.offset.y + gameHandler.groundHight * gameHandler.gameScale, 
-                gameHandler.gameScale * i * 30 - (int)(helecopter.helecopterPos.x) % 30 * gameHandler.gameScale, 
+                (gameHandler.gameScale * i * 30 - (int)(helecopter.helecopterPos.x) % 30 * gameHandler.gameScale + (helecopter.velocity.x * 2)), 
                 gameHandler.offset.y + gameHandler.groundHight * gameHandler.gameScale - 2 * gameHandler.gameScale);
         }
+        //renders explosions
+        gameRender(renderer, &gameHandler);
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderPresent(renderer);
 
         /*print some stuff*/
-        printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-        if(helecopter.displayMode == 1)
-        {
-            printf("coords: %f, %f\n", helecopter.helecopterPos.x, helecopter.helecopterPos.y);
-            printf("velocity: %f, %f\n", helecopter.velocity.x, helecopter.velocity.y);
-            if(helecopter.containsBomb)
-            {
-                printf("contains bomb\n");
-            }
-            else
-            {
-                printf("doesnt contain bomb\n");
-            }
-        }
+        // printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"); //\n\n\n\n
+        // if(helecopter.displayMode == 1)
+        // {
+        //     printf("coords: %f, %f\n", helecopter.helecopterPos.x, helecopter.helecopterPos.y);
+        //     printf("velocity: %f, %f\n", helecopter.velocity.x, helecopter.velocity.y);
+        //     if(helecopter.containsBomb)
+        //     {
+        //         printf("contains bomb\n");
+        //     }
+        //     else
+        //     {
+        //         printf("doesnt contain bomb\n");
+        //     }
+        // }
 
         endFrameTime = SDL_GetTicks64();
         if(realFps > (endFrameTime - beginningFrameTime))
