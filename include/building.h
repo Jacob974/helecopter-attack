@@ -6,5 +6,3 @@ void buildingCreate(GameHandler* gameHandler, double pos, int stories);
 void buildingRemove(GameHandler* gameHandler, int element);
 
 void buildingExitSoldier();
-
-void buildingRender(SDL_Renderer* renderer, GameHandler* gameHandler);

@@ -138,14 +138,6 @@ int main()
         /*render stuff in here*/
         SDL_RenderClear(renderer);
 
-        //renders a helecopter (kinda)
-        helecopterRender(renderer, &helecopter, &gameHandler);
-        
-        //renders the buildings
-        buildingRender(renderer, &gameHandler);
-
-        //renders missile pad
-        missilePadRender(renderer, &gameHandler);
 
         //renders the ground
         SDL_SetRenderDrawColor(renderer, 146, 76, 0, 255);
@@ -159,7 +151,7 @@ int main()
                 (gameHandler.gameScale * i * 30 - (int)(helecopter.helecopterPos.x) % 30 * gameHandler.gameScale + (helecopter.velocity.x * 2)), 
                 gameHandler.offset.y + gameHandler.groundHight * gameHandler.gameScale - 2 * gameHandler.gameScale);
         }
-        //renders explosions
+        //MAIN RENDER FUNCTION
         gameRender(renderer, &gameHandler);
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);

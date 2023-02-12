@@ -12,5 +12,3 @@
 void helecopterMove(Helecopter* helecopter);
 void helecopterFireGun(Helecopter* helecopter, Vec2 direction, GameHandler* gameHandler);
 void helecopterDropBomb(Helecopter* helecopter, GameHandler* gameHandler);
-
-void helecopterRender(SDL_Renderer* renderer, Helecopter* helecopter, GameHandler* gameHandler);

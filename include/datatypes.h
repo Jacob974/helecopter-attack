@@ -75,8 +75,8 @@ typedef struct Building
 } Building;
 typedef struct GameHandler
 {
-    Soldier* soldierList;
     Helecopter* helecopter;
+    Soldier* soldierList;
     Building* buildingList;
     MissilePad* missilePadList;
     Explosion* explosionList;
