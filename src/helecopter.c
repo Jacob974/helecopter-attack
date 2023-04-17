@@ -99,7 +99,15 @@ void helecopterDropBomb(Helecopter* helecopter, GameHandler* gameHandler)
 {
     if(!helecopter->containsBomb)
     {
-        helecopter->bombPos.y += 5.0;
+        helecopter->bombVelocity.y += 0.5;
+        if(helecopter->bombVelocity.y > 5)
+        {
+            helecopter->bombVelocity.y = 10;
+        }
+
+        helecopter->bombPos.y += helecopter->bombVelocity.y;
+        helecopter->bombPos.x += helecopter->bombVelocity.x;
+
         if(((int)(helecopter->bombPos.y) + helecopter->bombSize.y >= gameHandler->groundHight) && (helecopter->bombExists == 1))
         {
             //bomb has exploded
@@ -162,5 +170,6 @@ void helecopterDropBomb(Helecopter* helecopter, GameHandler* gameHandler)
     else
     {
         helecopter->bombPos = helecopter->helecopterPos;
+        helecopter->bombVelocity = helecopter->velocity;
     }
 }

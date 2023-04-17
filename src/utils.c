@@ -48,3 +48,16 @@ Int8 rectIntersectRect(Vec2f tile1Pos, Vec2 tile1Size, Vec2f tile2Pos, Vec2 tile
     ) return 0;
     return 1;
 }
+
+// void* addItemToList(void* list, short dataSize, int arrayLenfth)
+// {
+//     void* ptr = realloc(list, arrayLenfth * dataSize,);
+//     ptr
+// }
+// void* removeItemFromList(void* list, short dataSize, int arrayLenfth, int elementInArray)
+// {
+//     for(int i = elementInArray; i < arrayLenfth; i++)
+//     {
+
+//     }
+// }

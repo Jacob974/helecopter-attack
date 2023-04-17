@@ -24,6 +24,12 @@ typedef struct Explosion
     int duration; //amount of frames left
 } Explosion;
 
+typedef struct Bullet
+{
+    Vec2f prevPos;
+    Vec2f newPos;
+} Bullet;
+
 typedef struct Soldier
 {
     Vec2 size;
@@ -46,6 +52,7 @@ typedef struct Helecopter
     Int8 containsBomb;
     Int8 bombExists;
     Vec2f bombPos;
+    Vec2f bombVelocity;
     Vec2 bombSize;
 
     double damage;

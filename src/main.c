@@ -143,7 +143,7 @@ int main()
         SDL_SetRenderDrawColor(renderer, 146, 76, 0, 255);
         SDL_RenderDrawLine(renderer, 0, gameHandler.offset.y + gameHandler.groundHight  * gameHandler.gameScale, 20000, gameHandler.offset.y + gameHandler.groundHight * gameHandler.gameScale);
 
-        for(int i = 0; i < (20000 / 30 * gameHandler.gameScale); i++)
+        for(int i = 0; i < (2000 / 3 * gameHandler.gameScale); i++)
         {
             SDL_RenderDrawLine(renderer, 
                 (gameHandler.gameScale * i * 30 - (int)(helecopter.helecopterPos.x) % 30 * gameHandler.gameScale + (helecopter.velocity.x * 2)), 
