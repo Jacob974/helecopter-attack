@@ -1,7 +1,7 @@
 #include "gameHandler.h"
 #include <stdlib.h>
 
-void createGameHandler(GameHandler* gameHandler, Helecopter* helecopter, Vec2 helecopterScreenCoords, int groundHight, double gameScale)
+void createGameHandler(GameHandler* gameHandler, Helecopter* helecopter, Vec2 helecopterScreenCoords, double groundHight, double gameScale)
 {
     gameHandler->helecopter = helecopter;
     gameHandler->helecopter->velocity = (Vec2f){.x = 0.0, .y = 0.0};
@@ -9,11 +9,13 @@ void createGameHandler(GameHandler* gameHandler, Helecopter* helecopter, Vec2 he
     gameHandler->offset.x = helecopterScreenCoords.x - (int)(helecopter->helecopterPos.x);
     gameHandler->offset.y = helecopterScreenCoords.y - (int)(helecopter->helecopterPos.y); 
 
+    gameHandler->helecopter->bulletListSize = 0;
     gameHandler->buildingAmount = 0;
     gameHandler->missilePadAmount = 0;
     gameHandler->soldierAmount = 0;
     gameHandler->explosionAmount = 0;
 
+    gameHandler->helecopter->bulletList = malloc(1);
     gameHandler->buildingList = malloc(1);
     gameHandler->missilePadList = malloc(1);
     gameHandler->soldierList = malloc(1);
@@ -21,7 +23,6 @@ void createGameHandler(GameHandler* gameHandler, Helecopter* helecopter, Vec2 he
 
     gameHandler->gameScale = gameScale;
     gameHandler->groundHight = groundHight;
-
 
     gameHandler->alertAmount = 0;
 }
@@ -209,5 +210,16 @@ void gameRender(SDL_Renderer* renderer, GameHandler* gameHandler)
             gameHandler->offset.y + gameHandler->helecopter->helecopterPos.y * gameHandler->gameScale, 
             gameHandler->offset.x + gameHandler->helecopter->bulletPos.x * gameHandler->gameScale, 
             gameHandler->offset.y + gameHandler->helecopter->bulletPos.y * gameHandler->gameScale);
+    }
+    //renders the bullet list
+    for(int i = 0; i < gameHandler->helecopter->bulletListSize; i++)
+    {
+        SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
+
+        SDL_RenderDrawLine(renderer, 
+            gameHandler->offset.x + gameHandler->helecopter->bulletList[i].x * gameHandler->gameScale, 
+            gameHandler->offset.y + gameHandler->helecopter->bulletList[i].y * gameHandler->gameScale, 
+            gameHandler->offset.x + (gameHandler->helecopter->bulletList[i].x + 10) * gameHandler->gameScale, 
+            gameHandler->offset.y + (gameHandler->helecopter->bulletList[i].y + 5) * gameHandler->gameScale);
     }
 }

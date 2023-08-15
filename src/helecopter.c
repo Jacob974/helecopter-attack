@@ -1,4 +1,5 @@
 #include "helecopter.h"
+#include "utils.h"
 #include <stdlib.h>
 
 void helecopterMove(Helecopter* helecopter)
@@ -38,62 +39,71 @@ void helecopterMove(Helecopter* helecopter)
 }
 void helecopterFireGun(Helecopter* helecopter, Vec2 direction, GameHandler* gameHandler)
 {
-    //takes it from screen space ant turns it into gamespace
-    Vec2f lineOrigin = (Vec2f){.x = helecopter->helecopterPos.x, .y = helecopter->helecopterPos.y};
+    /*const variables*/
+    const int bulletXSpeed = 20;
+    const int bulletYSpeed = 10;
 
-    Vec2f lineEnd;
-    lineEnd.x = ((double)(direction.x) - gameHandler->offset.x) / gameHandler->gameScale;
-    lineEnd.y = ((double)(direction.y) - gameHandler->gameScale - gameHandler->offset.y) / gameHandler->gameScale;
-
-    //gives info to the helecopter
-    helecopter->bulletPos.x = lineEnd.x;
-    helecopter->bulletPos.y = lineEnd.y;
-
-    //detects if it hits a soldier
-    for(int i = 0; i < gameHandler->soldierAmount; i++)
+    /*bullet update*/
+    for(int i = 0; i < helecopter->bulletListSize; i++)
     {
-        Vec2f tileSize = (Vec2f){.x = (double)(gameHandler->soldierList[i].size.x), .y = (double)(gameHandler->soldierList[i].size.y)};
-        Vec2f tilePos = (Vec2f){.x = gameHandler->soldierList[i].pos, .y = gameHandler->groundHight - gameHandler->soldierList[i].size.y};
-        
-        if(detectCollision(tilePos, tileSize, lineOrigin, lineEnd))
-        {
-            soldierRemove(gameHandler, i);
-            i--; //makes it so the next turn of the loop will be the same element since the array has been realocated
-        }
+        helecopter->bulletList[i].x += bulletXSpeed;
+        helecopter->bulletList[i].y += bulletYSpeed;
     }
 
-    //detects if it hits a building
-    for(int i = 0; i < gameHandler->buildingAmount; i++)
+    /*adds another bullet*/
+    if(helecopter->shootGun == 1)
     {
-        Vec2f tileSize = (Vec2f){.x = (double)(gameHandler->buildingList[i].size.x), .y = (double)(gameHandler->buildingList[i].size.y)};
-        Vec2f tilePos = (Vec2f){.x = gameHandler->buildingList[i].pos, .y = gameHandler->groundHight - gameHandler->buildingList[i].size.y};
-        
-        if(detectCollision(tilePos, tileSize, lineOrigin, lineEnd))
+        helecopter->bulletListSize++;
+        helecopter->bulletList = realloc(helecopter->bulletList, helecopter->bulletListSize * sizeof(Vec2f));
+        helecopter->bulletList[helecopter->bulletListSize - 1] = helecopter->helecopterPos;
+    }
+
+    for(int i = 0; i < helecopter->bulletListSize; i++)
+    {
+        //detects if bullet hit soldier
+        // for(int j = 0; j < gameHandler->soldierAmount; j++)
+        // {
+        //     //not important now
+        // }
+
+        //detects if it hits a building
+        for(int j = 0; j < gameHandler->buildingAmount; j++)
         {
-            gameHandler->buildingList[i].damage -= 0.01;
-            if(gameHandler->buildingList[i].damage < 0.0)
+            if(helecopter->bulletList[i].x > gameHandler->buildingList[j].pos && 
+               helecopter->bulletList[i].x < (gameHandler->buildingList[j].pos + gameHandler->buildingList[j].size.x) &&
+               helecopter->bulletList[i].y > (gameHandler->groundHight - gameHandler->buildingList[j].size.y) && 
+               helecopter->bulletList[i].y < gameHandler->groundHight)
             {
-                buildingRemove(gameHandler, i);
-                i--; //makes it so the next itteration of the loop will be the same element since the array has been realocated
+                gameHandler->buildingList[j].damage -= 0.01;
+                if(gameHandler->buildingList[j].damage <= 0)
+                {
+                    buildingRemove(gameHandler, j);
+                }
+                deleteElement(helecopter->bulletList, i, helecopter->bulletListSize, Vec2f);
             }
         }
-    }
-    //detects if it hits a missile pad
-    for(int i = 0; i < gameHandler->missilePadAmount; i++)
-    {
-        Vec2f tileSize = (Vec2f){.x = (double)(gameHandler->missilePadList[i].size.x), .y = (double)(gameHandler->missilePadList[i].size.y)};
-        Vec2f tilePos = (Vec2f){.x = gameHandler->missilePadList[i].pos, .y = (int)(gameHandler->groundHight) - gameHandler->missilePadList[i].size.y};
-        
-        if(detectCollision(tilePos, tileSize, lineOrigin, lineEnd))
+        //detects if it hits a missile pad
+        for(int j = 0; j < gameHandler->missilePadAmount; j++) 
         {
-            gameHandler->missilePadList[i].damage -= 0.01;
-            if(gameHandler->missilePadList[i].damage <= 0.0)
+            if(helecopter->bulletList[i].x > gameHandler->missilePadList[j].pos && 
+            helecopter->bulletList[i].x < (gameHandler->missilePadList[j].pos + gameHandler->missilePadList[j].size.x) &&
+            helecopter->bulletList[i].y > (gameHandler->groundHight - gameHandler->missilePadList[j].size.y) && 
+            helecopter->bulletList[i].y < gameHandler->groundHight)
             {
-                missilePadRemove(gameHandler, i);
-                i--; //makes it so the next itteration of the loop will be the same element since the array has been realocated
+                gameHandler->missilePadList[j].damage -= 0.01;
+                if(gameHandler->missilePadList[j].damage <= 0)
+                {
+                    missilePadRemove(gameHandler, j);
+                }
+                deleteElement(helecopter->bulletList, i, helecopter->bulletListSize, Vec2f);
             }
         }
+        
     }
+
+    /* old bullet code */
+
+    
 }
 void helecopterDropBomb(Helecopter* helecopter, GameHandler* gameHandler)
 {

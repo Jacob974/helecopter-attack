@@ -1,5 +1,6 @@
 #include "building.h"
 #include "stdlib.h"
+#include "utils.h"
 
 void buildingCreate(GameHandler *gameHandler, double pos, int stories)
 {
@@ -14,6 +15,7 @@ void buildingCreate(GameHandler *gameHandler, double pos, int stories)
 }
 void buildingRemove(GameHandler *gameHandler, int element)
 {
+    //deleteElement(gameHandler->buildingList, element, gameHandler->buildingAmount, Building);
     gameHandler->buildingAmount--;
     for(int i = element; i < gameHandler->buildingAmount; i++) // moves the elements in the array over to the left 1
     {

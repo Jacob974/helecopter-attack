@@ -11,7 +11,7 @@ typedef struct Vec2
     int y;
 } Vec2;
 
-typedef struct Vec2f
+typedef struct Vec2f 
 {
     double x;
     double y;
@@ -23,12 +23,6 @@ typedef struct Explosion
     double size;
     int duration; //amount of frames left
 } Explosion;
-
-typedef struct Bullet
-{
-    Vec2f prevPos;
-    Vec2f newPos;
-} Bullet;
 
 typedef struct Soldier
 {
@@ -48,6 +42,9 @@ typedef struct Helecopter
 
     Vec2f bulletPos;
     Int8 firedGun;
+    Int8 shootGun;
+    Vec2f* bulletList;
+    int bulletListSize;
 
     Int8 containsBomb;
     Int8 bombExists;
@@ -58,6 +55,11 @@ typedef struct Helecopter
     double damage;
     
 } Helecopter;
+
+typedef struct Bullet
+{
+    int pos;
+}Bullet;
 
 typedef struct MissilePad
 {
@@ -97,5 +99,5 @@ typedef struct GameHandler
 
     double gameScale;
     double alertAmount;
-    int groundHight;
+    double groundHight;
 } GameHandler;
