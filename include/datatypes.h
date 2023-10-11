@@ -1,4 +1,7 @@
+//this is sorta the setup file I guess
 #pragma once
+#include <stdio.h>
+#include <math.h>
 
 typedef char Int8;
 typedef short Int16;
@@ -16,6 +19,13 @@ typedef struct Vec2f
     double x;
     double y;
 } Vec2f;
+
+typedef struct List
+{
+    int length;
+    int typeSize;
+    char* data;
+} List;
 
 typedef struct Explosion
 {

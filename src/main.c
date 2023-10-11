@@ -1,11 +1,13 @@
+#define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
 #include "datatypes.h"
 
 #include "gameHandler.h"
 #include "helecopter.h"
 
-int main()
+int main(int argc, char *argv[])
 {
+    printf("here\n");
     /*SDL variables*/
     SDL_Window* window = SDL_CreateWindow("helecopter game", 0, 0, 1000, 700, SDL_WINDOW_RESIZABLE);
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
@@ -40,7 +42,6 @@ int main()
     /*time variables*/
     unsigned long long beginningFrameTime;
     unsigned long long endFrameTime;
-
     int fps = 60;
     unsigned long long realFps = 1000 / fps;
 
@@ -51,8 +52,10 @@ int main()
         keyState = SDL_GetKeyboardState(NULL);
         SDL_GetMouseState(&mouseCoords.x, &mouseCoords.y);
 
+        //polls all the events
         while(SDL_PollEvent(&event))
         {
+            //polls left mouse button
             if(event.button.button == SDL_BUTTON_LEFT)
             {
                 if(event.type == SDL_MOUSEBUTTONDOWN)
@@ -64,10 +67,12 @@ int main()
                     //helecopter.firedGun = 0;
                 }
             }
+            //polls for window close event
             if(event.type == SDL_QUIT || event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
             {
                 gameRunning = 0;
             }
+            //events where checking for keyDown is needed
             if(event.key.keysym.scancode == SDL_SCANCODE_E && event.type == SDL_KEYDOWN)
             {
                 if(helecopter.stabalizeMode == 1)
@@ -93,6 +98,7 @@ int main()
 
         }
         
+        //events that only happen when key is pressed down
         if(keyState[SDL_SCANCODE_S])
         {
             helecopter.velocity.y += 0.2;
@@ -132,20 +138,15 @@ int main()
 
         /*updates*/
 
+        SDL_GetWindowSize(window, &windowSize.x, &windowSize.y);
         helecopterMove(&helecopter);
         helecopterDropBomb(&helecopter, &gameHandler);
+        helecopterFireGun(&helecopter, mouseCoords, &gameHandler);
 
-        SDL_GetWindowSize(window, &windowSize.x, &windowSize.y);
         gameHandlerUpdate(&gameHandler, windowSize);
-
-        //if(helecopter.firedGun == 1)
-        //{
-            helecopterFireGun(&helecopter, mouseCoords, &gameHandler);
-        ///}
 
         /*render stuff in here*/
         SDL_RenderClear(renderer);
-
 
         //renders the ground
         SDL_SetRenderDrawColor(renderer, 146, 76, 0, 255);
@@ -159,6 +160,7 @@ int main()
                 (gameHandler.gameScale * i * 30 - (int)(helecopter.helecopterPos.x) % 30 * gameHandler.gameScale + (helecopter.velocity.x * 2)), 
                 gameHandler.offset.y + gameHandler.groundHight * gameHandler.gameScale - 2 * gameHandler.gameScale);
         }
+
         //MAIN RENDER FUNCTION
         gameRender(renderer, &gameHandler);
 

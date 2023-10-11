@@ -200,17 +200,6 @@ void gameRender(SDL_Renderer* renderer, GameHandler* gameHandler)
             gameHandler->offset.x + (int)(gameHandler->helecopter->bombPos.x * gameHandler->gameScale) + gameHandler->helecopter->bombSize.x * gameHandler->gameScale, 
             gameHandler->offset.y + (int)(gameHandler->helecopter->bombPos.y * gameHandler->gameScale) + gameHandler->helecopter->bombSize.y * gameHandler->gameScale);
     }
-    //renders the bullet
-    if(gameHandler->helecopter->firedGun)
-    {
-        SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
-
-        SDL_RenderDrawLine(renderer, 
-            gameHandler->offset.x + gameHandler->helecopter->helecopterPos.x * gameHandler->gameScale, 
-            gameHandler->offset.y + gameHandler->helecopter->helecopterPos.y * gameHandler->gameScale, 
-            gameHandler->offset.x + gameHandler->helecopter->bulletPos.x * gameHandler->gameScale, 
-            gameHandler->offset.y + gameHandler->helecopter->bulletPos.y * gameHandler->gameScale);
-    }
     //renders the bullet list
     for(int i = 0; i < gameHandler->helecopter->bulletListSize; i++)
     {

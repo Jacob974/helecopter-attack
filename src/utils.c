@@ -49,15 +49,19 @@ Int8 rectIntersectRect(Vec2f tile1Pos, Vec2 tile1Size, Vec2f tile2Pos, Vec2 tile
     return 1;
 }
 
-// void* addItemToList(void* list, short dataSize, int arrayLenfth)
-// {
-//     void* ptr = realloc(list, arrayLenfth * dataSize,);
-//     ptr
-// }
-// void* removeItemFromList(void* list, short dataSize, int arrayLenfth, int elementInArray)
-// {
-//     for(int i = elementInArray; i < arrayLenfth; i++)
-//     {
+void createInit(List* list, int typeSize)
+{
+    list->typeSize = typeSize;
+    list->length = 0;
+    list->data = malloc(1);
+}
+void addToList(List* list, int item)
+{
+    list->length++;
+    list->data = realloc(list->data, list->length * list->typeSize);
+    list->data[list->length - 1] = item;
+}
+void removeFromList(List* list, int element)
+{
 
-//     }
-// }
+}

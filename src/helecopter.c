@@ -32,6 +32,15 @@ void helecopterMove(Helecopter* helecopter)
             helecopter->velocity.y = 0.0;
         }
     }
+    if(abs(helecopter->velocity.x) > 10.0)
+    {
+        helecopter->velocity.x = 10 * helecopter->velocity.x / abs(helecopter->velocity.x);
+    }
+    if(abs(helecopter->velocity.y) > 10.0)
+    {
+        helecopter->velocity.y = 10 * helecopter->velocity.y / abs(helecopter->velocity.y);
+    }
+    
     
     helecopter->helecopterPos.x += helecopter->velocity.x;
     helecopter->helecopterPos.y += helecopter->velocity.y;
@@ -100,10 +109,6 @@ void helecopterFireGun(Helecopter* helecopter, Vec2 direction, GameHandler* game
         }
         
     }
-
-    /* old bullet code */
-
-    
 }
 void helecopterDropBomb(Helecopter* helecopter, GameHandler* gameHandler)
 {

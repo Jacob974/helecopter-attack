@@ -26,7 +26,7 @@ void buildingRemove(GameHandler *gameHandler, int element)
 }
 void buildingExitSoldier(GameHandler *gameHandler, int element)
 {
-    if (gameHandler->buildingList[element].playerCount <= 0)
+    if (gameHandler->buildingList[element].playerCount >= 0)
     {
         gameHandler->buildingList[element].playerCount--;
 
