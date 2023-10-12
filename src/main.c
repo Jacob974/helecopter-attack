@@ -1,4 +1,3 @@
-#define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
 #include "datatypes.h"
 
@@ -7,9 +6,8 @@
 
 int main(int argc, char *argv[])
 {
-    printf("here\n");
     /*SDL variables*/
-    SDL_Window* window = SDL_CreateWindow("helecopter game", 0, 0, 1000, 700, SDL_WINDOW_RESIZABLE);
+    SDL_Window* window = SDL_CreateWindow("helecopter game", 0, 30, 1000, 700, SDL_WINDOW_RESIZABLE);
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     SDL_Event event;
 
@@ -19,7 +17,7 @@ int main(int argc, char *argv[])
     /*game objects here*/
     Helecopter helecopter;
     helecopter.helecopterPos = (Vec2f){.x = 0.0, .y = 0.0};
-    helecopter.size = (Vec2){.x = 64, .y = 32};
+    helecopter.size = (Vec2){.x = 64, .y = 16};
 
     helecopter.bombSize = (Vec2){.x = 15, .y = 10};
     helecopter.containsBomb = 1;
@@ -126,6 +124,11 @@ int main(int argc, char *argv[])
         if(keyState[SDL_SCANCODE_DOWN])
         {
             gameHandler.gameScale -= 0.05 * gameHandler.gameScale;
+        }
+        if(keyState[SDL_SCANCODE_E])
+        {
+            helecopter.bulletList = realloc(helecopter.bulletList, 1);
+            helecopter.bulletListSize = 0;
         }
         if(keyState[SDL_SCANCODE_F])
         {

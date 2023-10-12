@@ -131,11 +131,6 @@ void gameRender(SDL_Renderer* renderer, GameHandler* gameHandler)
             gameHandler->groundHight           * gameHandler->gameScale + gameHandler->offset.y, 
             gameHandler->missilePadList[i].pos * gameHandler->gameScale + gameHandler->offset.x, 
             gameHandler->groundHight           * gameHandler->gameScale + gameHandler->offset.y - gameHandler->missilePadList[i].size.y * gameHandler->gameScale);
-        // SDL_RenderDrawLine(renderer, 
-        //     gameHandler->missilePadList[i].pos * gameHandler->gameScale + gameHandler->offset.x, 
-        //     gameHandler->groundHight           * gameHandler->gameScale + gameHandler->offset.y, 
-        //     gameHandler->missilePadList[i].pos * gameHandler->gameScale + gameHandler->offset.x + gameHandler->missilePadList[i].size.x * gameHandler->gameScale, 
-        //     gameHandler->groundHight           * gameHandler->gameScale + gameHandler->offset.y);
         SDL_RenderDrawLine(renderer, 
             gameHandler->missilePadList[i].pos * gameHandler->gameScale + gameHandler->offset.x + gameHandler->missilePadList[i].size.x * gameHandler->gameScale, 
             gameHandler->groundHight           * gameHandler->gameScale + gameHandler->offset.y, 
@@ -155,23 +150,33 @@ void gameRender(SDL_Renderer* renderer, GameHandler* gameHandler)
 
     SDL_RenderDrawLine(renderer, 
         gameHandler->offset.x + (int)(gameHandler->helecopter->helecopterPos.x * gameHandler->gameScale), 
-        gameHandler->offset.y + (int)(gameHandler->helecopter->helecopterPos.y * gameHandler->gameScale), 
-        gameHandler->offset.x + (int)(gameHandler->helecopter->helecopterPos.x * gameHandler->gameScale) + gameHandler->helecopter->size.x * gameHandler->gameScale, 
+        gameHandler->offset.y + (int)(gameHandler->helecopter->helecopterPos.y * gameHandler->gameScale + gameHandler->helecopter->size.y * gameHandler->gameScale), 
+        gameHandler->offset.x + (int)(gameHandler->helecopter->helecopterPos.x * gameHandler->gameScale) + gameHandler->helecopter->size.x * .25 * gameHandler->gameScale, 
         gameHandler->offset.y + (int)(gameHandler->helecopter->helecopterPos.y * gameHandler->gameScale));
     SDL_RenderDrawLine(renderer, 
-        gameHandler->offset.x + (int)(gameHandler->helecopter->helecopterPos.x * gameHandler->gameScale), 
+        gameHandler->offset.x + (int)(gameHandler->helecopter->helecopterPos.x * gameHandler->gameScale) + gameHandler->helecopter->size.x * gameHandler->gameScale, 
         gameHandler->offset.y + (int)(gameHandler->helecopter->helecopterPos.y * gameHandler->gameScale), 
-        gameHandler->offset.x + (int)(gameHandler->helecopter->helecopterPos.x * gameHandler->gameScale), 
+        gameHandler->offset.x + (int)(gameHandler->helecopter->helecopterPos.x * gameHandler->gameScale) + gameHandler->helecopter->size.x * .25 * gameHandler->gameScale, 
+        gameHandler->offset.y + (int)(gameHandler->helecopter->helecopterPos.y * gameHandler->gameScale));
+    SDL_RenderDrawLine(renderer,
+        gameHandler->offset.x + (int)(gameHandler->helecopter->helecopterPos.x * gameHandler->gameScale) + gameHandler->helecopter->size.x * gameHandler->gameScale, 
+        gameHandler->offset.y + (int)(gameHandler->helecopter->helecopterPos.y * gameHandler->gameScale), 
+        gameHandler->offset.x + (int)(gameHandler->helecopter->helecopterPos.x * gameHandler->gameScale) + gameHandler->helecopter->size.x * gameHandler->gameScale, 
+        gameHandler->offset.y + (int)(gameHandler->helecopter->helecopterPos.y * gameHandler->gameScale) + gameHandler->helecopter->size.y * 0.25 * gameHandler->gameScale);
+    SDL_RenderDrawLine(renderer,
+        gameHandler->offset.x + (int)(gameHandler->helecopter->helecopterPos.x * gameHandler->gameScale) + gameHandler->helecopter->size.x * gameHandler->gameScale, 
+        gameHandler->offset.y + (int)(gameHandler->helecopter->helecopterPos.y * gameHandler->gameScale) + gameHandler->helecopter->size.y * 0.25 * gameHandler->gameScale, 
+        gameHandler->offset.x + (int)(gameHandler->helecopter->helecopterPos.x * gameHandler->gameScale) + gameHandler->helecopter->size.x * 0.5 * gameHandler->gameScale, 
+        gameHandler->offset.y + (int)(gameHandler->helecopter->helecopterPos.y * gameHandler->gameScale) + gameHandler->helecopter->size.y * 0.25 * gameHandler->gameScale);
+    SDL_RenderDrawLine(renderer,
+        gameHandler->offset.x + (int)(gameHandler->helecopter->helecopterPos.x * gameHandler->gameScale) + gameHandler->helecopter->size.x * 0.5 * gameHandler->gameScale, 
+        gameHandler->offset.y + (int)(gameHandler->helecopter->helecopterPos.y * gameHandler->gameScale) + gameHandler->helecopter->size.y * 0.25 * gameHandler->gameScale, 
+        gameHandler->offset.x + (int)(gameHandler->helecopter->helecopterPos.x * gameHandler->gameScale) + gameHandler->helecopter->size.x * 0.5 * gameHandler->gameScale, 
         gameHandler->offset.y + (int)(gameHandler->helecopter->helecopterPos.y * gameHandler->gameScale) + gameHandler->helecopter->size.y * gameHandler->gameScale);
-    SDL_RenderDrawLine(renderer, 
-        gameHandler->offset.x + (int)(gameHandler->helecopter->helecopterPos.x * gameHandler->gameScale), 
+    SDL_RenderDrawLine(renderer,
+        gameHandler->offset.x + (int)(gameHandler->helecopter->helecopterPos.x * gameHandler->gameScale) + gameHandler->helecopter->size.x * 0.5 * gameHandler->gameScale, 
         gameHandler->offset.y + (int)(gameHandler->helecopter->helecopterPos.y * gameHandler->gameScale) + gameHandler->helecopter->size.y * gameHandler->gameScale, 
-        gameHandler->offset.x + (int)(gameHandler->helecopter->helecopterPos.x * gameHandler->gameScale) + gameHandler->helecopter->size.x * gameHandler->gameScale, 
-        gameHandler->offset.y + (int)(gameHandler->helecopter->helecopterPos.y * gameHandler->gameScale) + gameHandler->helecopter->size.y * gameHandler->gameScale);
-    SDL_RenderDrawLine(renderer, 
-        gameHandler->offset.x + (int)(gameHandler->helecopter->helecopterPos.x * gameHandler->gameScale) + gameHandler->helecopter->size.x * gameHandler->gameScale, 
-        gameHandler->offset.y + (int)(gameHandler->helecopter->helecopterPos.y * gameHandler->gameScale), 
-        gameHandler->offset.x + (int)(gameHandler->helecopter->helecopterPos.x * gameHandler->gameScale) + gameHandler->helecopter->size.x * gameHandler->gameScale, 
+        gameHandler->offset.x + (int)(gameHandler->helecopter->helecopterPos.x * gameHandler->gameScale), 
         gameHandler->offset.y + (int)(gameHandler->helecopter->helecopterPos.y * gameHandler->gameScale) + gameHandler->helecopter->size.y * gameHandler->gameScale);
 
     //renders the bomb
@@ -208,7 +213,7 @@ void gameRender(SDL_Renderer* renderer, GameHandler* gameHandler)
         SDL_RenderDrawLine(renderer, 
             gameHandler->offset.x + gameHandler->helecopter->bulletList[i].x * gameHandler->gameScale, 
             gameHandler->offset.y + gameHandler->helecopter->bulletList[i].y * gameHandler->gameScale, 
-            gameHandler->offset.x + (gameHandler->helecopter->bulletList[i].x + 10) * gameHandler->gameScale, 
+            gameHandler->offset.x + (gameHandler->helecopter->bulletList[i].x - 10) * gameHandler->gameScale, 
             gameHandler->offset.y + (gameHandler->helecopter->bulletList[i].y + 5) * gameHandler->gameScale);
     }
 }

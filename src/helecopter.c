@@ -55,7 +55,7 @@ void helecopterFireGun(Helecopter* helecopter, Vec2 direction, GameHandler* game
     /*bullet update*/
     for(int i = 0; i < helecopter->bulletListSize; i++)
     {
-        helecopter->bulletList[i].x += bulletXSpeed;
+        helecopter->bulletList[i].x -= bulletXSpeed;
         helecopter->bulletList[i].y += bulletYSpeed;
     }
 
@@ -64,7 +64,8 @@ void helecopterFireGun(Helecopter* helecopter, Vec2 direction, GameHandler* game
     {
         helecopter->bulletListSize++;
         helecopter->bulletList = realloc(helecopter->bulletList, helecopter->bulletListSize * sizeof(Vec2f));
-        helecopter->bulletList[helecopter->bulletListSize - 1] = helecopter->helecopterPos;
+        helecopter->bulletList[helecopter->bulletListSize - 1].x = helecopter->helecopterPos.x;
+        helecopter->bulletList[helecopter->bulletListSize - 1].y = helecopter->helecopterPos.y + helecopter->size.y;
     }
 
     for(int i = 0; i < helecopter->bulletListSize; i++)

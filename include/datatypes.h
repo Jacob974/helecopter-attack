@@ -2,6 +2,7 @@
 #pragma once
 #include <stdio.h>
 #include <math.h>
+#include <stdlib.h>
 
 typedef char Int8;
 typedef short Int16;
